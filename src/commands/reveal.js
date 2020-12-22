@@ -6,9 +6,9 @@ module.exports = {
         if (!games.has(channel.id)) return;
         const game = games.get(channel.id);
         if (game.clueGiver != author.id) return channel.send(`Only the cluegiver can reveal the answer!`);
+        game.started = false
 
         let scoredPoints;
-
 
         const delta = Math.abs(game.board.fanAngle - game.board.dialAngle);
         if (delta <= 3.5) scoredPoints = 4;
@@ -38,7 +38,7 @@ module.exports = {
                         }
                         game.scores[game.turn] += scoredPoints;
                         game.scores[game.turn ^ 1] += otherPoints;
-                        channel.send(`Guessing team scored ${scoredPoints}, other team score ${otherPoints}\nTeam 1 ${game.scores[0]}-${game.scores[1]} Team 2`);
+                        channel.send(`Guessing team scored ${scoredPoints}, other team score ${otherPoints}\nTeam 1 \t${game.scores[0]}-${game.scores[1]} \tTeam 2`);
                     });
                 }))
             })

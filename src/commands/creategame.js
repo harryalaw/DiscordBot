@@ -1,9 +1,9 @@
 const Game = require('../bot_components/Game.js');
 
 module.exports = {
-    'name': 'configure',
+    'name': 'creategame',
     'description': 'Create a new game of wavelength and change the settings',
-    'aliases': ['creategame', 'c'],
+    'aliases': ['create', 'c'],
     execute(message, args, games) {
         const { channel } = message;
         if (games.has(channel.id)) return message.channel.send("There's already a game in this channel!");

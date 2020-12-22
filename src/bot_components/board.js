@@ -15,7 +15,6 @@ class Board {
     #CIRCLE_PLACEMENT = new Coordinate(298, 217);
 
     constructor(prompt) {
-        // this.dialAngle = this.#MIN_ANGLE;
         this.dialAngle = 0;
         this.fanAngle = -45;
         this.prompt = prompt;
@@ -27,7 +26,6 @@ class Board {
         this.dialAngle -= angle;
         if (this.dialAngle > this.#MAX_ANGLE) this.dialAngle = this.#MAX_ANGLE;
         if (this.dialAngle < this.#MIN_ANGLE) this.dialAngle = this.#MIN_ANGLE;
-
     }
 
     setFanAngle() {
@@ -36,9 +34,9 @@ class Board {
     }
 
     async makeBoard(isSecret) {
-        // Using the flag of false on the rotate stops resizing the image
-        // I've made my assets so that they are contained within the circle that rotates them
-        // So no resizing is necessary
+        // Using the flag of false on jimp.rotate stops it resizing the image
+        // I've made my assets so that they are contained within the circle 
+        // that rotates them so no resizing is necessary
         let out = await Jimp.read('./assets/background.png');
         if (isSecret) {
             out.blit(await Jimp.read('./assets/overlay-closed.png'), 0, 0);

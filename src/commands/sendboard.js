@@ -10,46 +10,42 @@ module.exports = {
         if (!games.has(channel.id)) return;
 
         const game = games.get(channel.id);
+        if (game.started) return message.channel.send("A round has already started! 😱");
+
         const choices = Util.sample(prompts, 2)
         game.clueGiver = author.id;
         game.turn = game.players.get(member);
-        game.board.dialAngle = 0;
+        game.started = true;
+        game.prompt = ["", ""];
 
-        const text = `Here are the two spectrums you can choose between:
+        game.board.dialAngle = 0;
+        const preamble = `I'll be sending you a choice of two spectrums to choose between,
+but first I'll show you where the target will be.`
+        const text = `Here are the two spectrums you get to choose between:
         \n:one: ${choices[0][0]} - ${choices[0][1]}\n:two: ${choices[1][0]} - ${choices[1][1]}
-        \nChoose by reacting to this message with the corresponding emoji!`
+        \nLook at where the target’s center is located spatially along the visible area of the wheel. Now think of a clue that is conceptually where the target is located ON THE SPECTRUM between the two concepts on your card.
+        \nThink of a clue that matches one of the two possible spectrums above and once you've decided pick the spectrum by reacting with the corresponding emoji and give your clue to your team!`;
 
         const promptFilter = (reaction, user) => {
-            console.log(reaction.emoji.name);
             return reaction.emoji.name == "1️⃣" || reaction.emoji.name == "2️⃣";
         }
 
-        const thumbsUpFilter = (reaction, user) => {
-            console.log(reaction.emoji.name);
-            return reaction.emoji.name == "👍" && !user.bot;
-        }
-
-
         const reactions = [];
-        author.send(text).then((msg) => {
-            reactions.push(msg.react("1️⃣"));
-            reactions.push(msg.react("2️⃣"));
-            Promise.all(reactions).then(() => {
-                msg.awaitReactions(promptFilter, { max: 1 }).then(collected => {
-                    let prompt = collected.has("1️⃣") ? choices[0] : choices[1];
-                    game.board.prompt = prompt;
-                    game.board.setFanAngle();
-                    game.board.bufferImage(false).then(img => author.send(img)).then(() =>
-                        author.send(`Look at where the target is and try to think of something that lies on the spectrum there! Once you've done that give your team the clue and give me a thumbs up!`))
-                        .then((msg) => msg.react("👍").then(() => msg.awaitReactions(thumbsUpFilter, { max: 1 })
-                            .then(() => {
-                                game.board.sendAsMessage(true, channel);
-                            })));
-                });
+        author.send(preamble).then((msg) => {
+            game.board.bufferImage(false).then(img => author.send(img)).then(() => {
+                author.send(text).then((msg) => {
+                    reactions.push(msg.react("1️⃣"));
+                    reactions.push(msg.react("2️⃣"));
+                    Promise.all(reactions).then(() => {
+                        msg.awaitReactions(promptFilter, { max: 1 }).then(collected => {
+                            let prompt = collected.has("1️⃣") ? choices[0] : choices[1];
+                            game.board.prompt = prompt;
+                            game.board.setFanAngle();
+                            game.board.sendAsMessage(true, channel);
+                        });
+                    }).catch(console.error);
+                }).catch(console.error);
             }).catch(console.error);
-        }).catch(console.error);
-        // game.newPrompt();
-        // game.board.setFanAngle();
-        // game.board.bufferImage(false).then(img => author.send(img));
+        });
     }
 }

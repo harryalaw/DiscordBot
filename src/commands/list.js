@@ -15,8 +15,8 @@ module.exports = {
         game.players.forEach((value, member) => {
             const name = Util.getName(member);
             names.push(name);
-            if (game.players.get(member) == 1) team0.push(name);
-            if (game.players.get(member) == 0) team1.push(name);
+            if (game.players.get(member) == 0) team0.push(name);
+            if (game.players.get(member) == 1) team1.push(name);
         })
 
         message.channel.send(`Players in the game: ${names.join(', ')}`);

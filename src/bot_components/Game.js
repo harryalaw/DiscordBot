@@ -13,7 +13,7 @@ class Game {
         this.turn = 0;
         this.scoreCap = 10;
         this.scores = [0, 0];
-        this.prompt = this.newPrompt();
+        this.prompt = ["", ""]
         this.board = new Board(this.prompt);
         this.clueGiver;
     }
@@ -32,14 +32,12 @@ class Game {
         this.teams[team].add(player.id);
         this.players.set(player, team);
         this.teams[team ^ 1].delete(player.id);
-        player.roles.set([roles[team]]);
+        // player.roles.set([roles[team]]);
     }
 
     setScoreCap(score) {
         this.scoreCap = score;
     }
-
-
 
     shuffleTeams() {
         const playerArray = Array.from(this.players.keys());
@@ -54,7 +52,6 @@ class Game {
     newPrompt() {
         this.prompt = Util.pickRandom(prompts);
         this.board = new Board(this.prompt);
-        console.log(this.prompt);
     }
 }
 
