@@ -1,4 +1,4 @@
-const { MessageAttachment } = require('discord.js');
+comconst { MessageAttachment } = require('discord.js');
 const Jimp = require('jimp');
 const { words } = require('../../assets/prompts.json');
 
@@ -26,6 +26,10 @@ class Board {
         this.dialAngle -= angle;
         if (this.dialAngle > this.#MAX_ANGLE) this.dialAngle = this.#MAX_ANGLE;
         if (this.dialAngle < this.#MIN_ANGLE) this.dialAngle = this.#MIN_ANGLE;
+    }
+
+    setPrompt(prompt) {
+        this.prompt = prompt;
     }
 
     setFanAngle() {

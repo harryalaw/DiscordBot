@@ -1,4 +1,5 @@
 const Game = require('../bot_components/Game.js');
+const { prefix } = require('../../config.json')
 
 module.exports = {
     'name': 'creategame',
@@ -9,7 +10,7 @@ module.exports = {
         if (games.has(channel.id)) return message.channel.send("There's already a game in this channel!");
         let game = new Game(message.channel);
         games.set(channel.id, game);
-        channel.send(`Who wants to play Wavelength? \`?join\` in!`);
+        channel.send(`Who wants to play Wavelength? \`${prefix}join\` in!`);
         return
     }
 }

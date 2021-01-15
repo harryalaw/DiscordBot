@@ -12,22 +12,22 @@ module.exports = {
         const game = games.get(channel.id);
         if (game.started) return message.channel.send("A round has already started! 😱");
 
-        const choices = Util.sample(prompts, 2)
+        const choices = Util.sample(prompts, 3)
         game.clueGiver = author.id;
         game.turn = game.players.get(member);
         game.started = true;
         game.prompt = ["", ""];
 
         game.board.dialAngle = 0;
-        const preamble = `I'll be sending you a choice of two spectrums to choose between,
+        const preamble = `I'll be sending you a choice of a few spectrums to choose between,
 but first I'll show you where the target will be.`
-        const text = `Here are the two spectrums you get to choose between:
-        \n:one: ${choices[0][0]} - ${choices[0][1]}\n:two: ${choices[1][0]} - ${choices[1][1]}
+        const text = `Here are the spectrums you get to choose between:
+        \n:one: ${choices[0][0]} - ${choices[0][1]}\n:two: ${choices[1][0]} - ${choices[1][1]}\n:three: ${choices[2][0]} - ${choices[2][1]}
         \nLook at where the target’s center is located spatially along the visible area of the wheel. Now think of a clue that is conceptually where the target is located ON THE SPECTRUM between the two concepts on your card.
-        \nThink of a clue that matches one of the two possible spectrums above and once you've decided pick the spectrum by reacting with the corresponding emoji and give your clue to your team!`;
+        \nThink of a clue that matches one of the possible spectrums above and once you've decided pick the spectrum by reacting with the corresponding emoji and give your clue to your team!`;
 
         const promptFilter = (reaction, user) => {
-            return reaction.emoji.name == "1️⃣" || reaction.emoji.name == "2️⃣";
+            return reaction.emoji.name == "1️⃣" || reaction.emoji.name == "2️⃣" || reaction.emoji.name == "3️⃣";
         }
 
         const reactions = [];
@@ -36,10 +36,11 @@ but first I'll show you where the target will be.`
                 author.send(text).then((msg) => {
                     reactions.push(msg.react("1️⃣"));
                     reactions.push(msg.react("2️⃣"));
+                    reactions.push(msg.react("3️⃣"));
                     Promise.all(reactions).then(() => {
                         msg.awaitReactions(promptFilter, { max: 1 }).then(collected => {
-                            let prompt = collected.has("1️⃣") ? choices[0] : choices[1];
-                            game.board.prompt = prompt;
+                            let prompt = collected.has("1️⃣") ? choices[0] : collected.has("2️⃣") ? choices[1] : choices[2];
+                            game.board.setPrompt(prompt);
                             game.board.setFanAngle();
                             game.board.sendAsMessage(true, channel);
                         });
