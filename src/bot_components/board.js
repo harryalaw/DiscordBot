@@ -1,4 +1,4 @@
-comconst { MessageAttachment } = require('discord.js');
+const { MessageAttachment } = require('discord.js');
 const Jimp = require('jimp');
 const { words } = require('../../assets/prompts.json');
 

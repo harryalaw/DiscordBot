@@ -2,7 +2,6 @@ const { Collection } = require('discord.js');
 const Util = require('../utility/util.js');
 const Board = require('./board.js');
 const { prompts } = require('../../assets/prompts.json');
-const { roles } = require('../../config.json');
 
 class Game {
     constructor(channel) {
@@ -32,7 +31,6 @@ class Game {
         this.teams[team].add(player.id);
         this.players.set(player, team);
         this.teams[team ^ 1].delete(player.id);
-        // player.roles.set([roles[team]]);
     }
 
     setScoreCap(score) {
@@ -52,6 +50,11 @@ class Game {
     newPrompt() {
         this.prompt = Util.pickRandom(prompts);
         this.board = new Board(this.prompt);
+    }
+
+    resetPrompt() {
+        this.prompt = ["", ""];
+        this.board.setPrompt(["", ""])
     }
 }
 

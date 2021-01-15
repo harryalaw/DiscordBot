@@ -16,7 +16,8 @@ module.exports = {
         game.clueGiver = author.id;
         game.turn = game.players.get(member);
         game.started = true;
-        game.prompt = ["", ""];
+        game.resetPrompt();
+        game.board.setFanAngle();
 
         game.board.dialAngle = 0;
         const preamble = `I'll be sending you a choice of a few spectrums to choose between,
@@ -41,7 +42,6 @@ but first I'll show you where the target will be.`
                         msg.awaitReactions(promptFilter, { max: 1 }).then(collected => {
                             let prompt = collected.has("1️⃣") ? choices[0] : collected.has("2️⃣") ? choices[1] : choices[2];
                             game.board.setPrompt(prompt);
-                            game.board.setFanAngle();
                             game.board.sendAsMessage(true, channel);
                         });
                     }).catch(console.error);

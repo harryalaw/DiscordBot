@@ -19,7 +19,6 @@ client.once('ready', () => {
 
 client.on('message', message => {
     const { content, channel } = message;
-    if (!message.author.bot) console.log(content);
     if (!content.startsWith(prefix) || message.author.bot) return;
 
     const args = content.slice(prefix.length).trim().split(/ +/);
