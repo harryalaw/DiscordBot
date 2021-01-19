@@ -27,7 +27,7 @@ class Game {
         if (!this.players.has(player)) return;
         if (!isNaN(team)) team %= 2;
         if (team !== 0 && team !== 1) {
-            team = this.teams[0].size <= this.teams[0].size ? 0 : 1;
+            team = this.teams[0].size <= this.teams[1].size ? 0 : 1;
         }
         this.teams[team].add(player.id);
         this.players.set(player, team);
