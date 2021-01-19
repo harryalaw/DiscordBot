@@ -7,10 +7,13 @@ module.exports = {
     'description': 'Ends the game of wavelength in this channel.',
     execute(message, args, games) {
         const { channel, member } = message;
-        // check permission of user
-        if (!games.has(channel.id) || (this.owner !== member && !member.id != BOT_OWNER)) {
+        if (!games.has(channel.id)) return;
+        const game = games.get(channel.id);
+        // Only the creator of a game can end it or the bot owner
+        if (game.owner !== member && member.id !== BOT_OWNER) {
             return channel.send(`Only the person who created the game can end it.`)
         }
         games.delete(channel.id);
+        channel.send(`The game in this channel has ended.`);
     }
 }

@@ -32,6 +32,8 @@ but first I'll show you where the target will be.`
             return reaction.emoji.name == "1️⃣" || reaction.emoji.name == "2️⃣" || reaction.emoji.name == "3️⃣";
         }
 
+        message.channel.send(`I'm sending ${Util.getName(member)} the instructions to start the next round.`)
+
         const reactions = [];
         author.send(preamble).then((msg) => {
             game.board.bufferImage(false).then(img => author.send(img)).then(() => {

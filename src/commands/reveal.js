@@ -1,3 +1,5 @@
+const { prefix } = require('../../config.json');
+
 module.exports = {
     'name': 'reveal',
     'description': "Let's the clue giver reveal the board and triggers the end of the round.",
@@ -5,6 +7,7 @@ module.exports = {
         const { channel, author, member } = message;
         if (!games.has(channel.id)) return;
         const game = games.get(channel.id);
+        if (!game.started) return channel.send(`The round is over, start a new one with !send`)
         if (game.clueGiver != author.id) return channel.send(`Only the cluegiver can reveal the answer!`);
         game.started = false
 
@@ -38,7 +41,14 @@ module.exports = {
                         }
                         game.scores[game.turn] += scoredPoints;
                         game.scores[game.turn ^ 1] += otherPoints;
-                        channel.send(`Guessing team scored ${scoredPoints}, other team score ${otherPoints}\nTeam 1 \t${game.scores[0]}-${game.scores[1]} \tTeam 2`);
+                        channel.send(`Team ${game.turn + 1} scored ${scoredPoints}, Team ${(game.turn ^ 1) + 1} scored ${otherPoints}\nTeam 1 \t${game.scores[0]}-${game.scores[1]} \tTeam 2`);
+                        // If the current team gets a perfect guess and are still trailing they get to go again.
+                        const nextTeam = scoredPoints === 4 && game.scores[game.turn] < game.scores[game.turn ^ 1] ? game.turn : game.turn ^ 1;
+                        if (nextTeam == game.turn) {
+                            channel.send(`Because Team ${nextTeam + 1} got a perfect guess and are still losing it's their turn again. Please select your psychic and have them use \`${prefix}send\` to take their turn!`);
+                        } else {
+                            channel.send(`It's Team ${nextTeam + 1}'s go next, pick your psychic and have them \`${prefix}send\` to get the next round started.`);
+                        }
                     });
                 }))
             })

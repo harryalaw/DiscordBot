@@ -10,9 +10,9 @@ module.exports = {
         if (!games.has(message.channel.id)) return message.reply(`There's no game in this channel!`);
 
         let game = games.get(channel.id);
-        if (game.started) return channel.send("Please wait for the game to finish to join in!");
+        if (game.started) return channel.send("Please wait for the round to finish to join in!");
 
         game.addPlayer(member, args[0]);
-        message.channel.send(`Added ${Util.getName(member)}`);
+        message.channel.send(`Added ${Util.getName(member)} to Team ${game.players.get(member) + 1}`);
     }
 }

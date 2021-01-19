@@ -10,7 +10,9 @@ module.exports = {
         const { channel, member } = message;
         if (!games.has(channel.id)) return
         const game = games.get(channel.id);
-        if (!game.teams[game.turn].has(member.id)) return;
+        if (!game.teams[game.turn].has(member.id)) {
+            return message.channel.send(`Only the players on Team ${game.turn + 1} can move the dial`);
+        }
         if (isNaN(args[0])) return message.reply(`Type your messages as \`${prefix}move 10\` or \`${prefix}move -5\``);
 
         game.board.moveDial(args[0]);
