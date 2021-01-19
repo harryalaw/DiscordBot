@@ -1,7 +1,7 @@
 const { Collection } = require('discord.js');
 const Util = require('../utility/util.js');
 const Board = require('./board.js');
-const { prompts } = require('../../assets/prompts.json');
+const { prompts } = require('../../assets/text_assets/prompts.json');
 
 class Game {
     constructor(channel) {

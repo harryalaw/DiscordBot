@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const Util = require('../utility/Util.js');
-const { prompts } = require('../../assets/prompts.json');
+const { prompts } = require('../../assets/text_assets/prompts.json');
 
 module.exports = {
     'name': 'sendboard',
