@@ -1,368 +1,95 @@
 {
-    "prompts": [
-        [
-            "Wise",
-            "Intelligent"
-        ],
-        [
-            "Uncool",
-            "Cool"
-        ],
-        [
-            "Sad song",
-            "Happy song"
-        ],
-        [
-            "Requires luck",
-            "Requires skill"
-        ],
-        [
-            "Movie",
-            "Film"
-        ],
-        [
-            "Hot",
-            "Cold"
-        ],
-        [
-            "Need",
-            "Want"
-        ],
-        [
-            "The worst",
-            "The best"
-        ],
-        [
-            "Job",
-            "Career"
-        ],
-        [
-            "Underrated game",
-            "Overrated game"
-        ],
-        [
-            "Bad mouthfeel",
-            "Good mouthfeel"
-        ],
-        [
-            "Ineffective",
-            "Effective"
-        ],
-        [
-            "Action move",
-            "Adventure movie"
-        ],
-        [
-            "Soft",
-            "Hard"
-        ],
-        [
-            "Underrated weapon",
-            "Overrated weapon"
-        ],
-        [
-            "Normal thing to own",
-            "Weird thing to own"
-        ],
-        [
-            "Straight",
-            "Curvy"
-        ],
-        [
-            "Artisanal",
-            "Mass produced"
-        ],
-        [
-            "Bad man",
-            "Good man"
-        ],
-        [
-            "For kids",
-            "For adults"
-        ],
-        [
-            "Inflexible",
-            "Flexible"
-        ],
-        [
-            "Replaceable",
-            "Irreplaceable"
-        ],
-        [
-            "Boring topic",
-            "Fascinating topic"
-        ],
-        [
-            "Weak",
-            "Strong"
-        ],
-        [
-            "Easy to do",
-            "Hard to do"
-        ],
-        [
-            "Worst day of the year",
-            "Best day of the year"
-        ],
-        [
-            "Unfashionable",
-            "Fashionable"
-        ],
-        [
-            "Unsexy pokemon",
-            "Sexy pokemon"
-        ],
-        [
-            "Heterogenous",
-            "Homogenous"
-        ],
-        [
-            "Smelly in a bad way",
-            "Smelly in a good way"
-        ],
-        [
-            "Ethical to eat",
-            "Unethical to eat"
-        ],
-        [
-            "Uncontroversial topic",
-            "Controversial topic"
-        ],
-        [
-            "Movie that Godzilla would ruin",
-            "Movie that Godzilla would improve"
-        ],
-        [
-            "Bad",
-            "Good"
-        ],
-        [
-            "Round animal",
-            "Pointy animal"
-        ],
-        [
-            "Old fashioned",
-            "Avant garde"
-        ],
-        [
-            "Funny topic",
-            "Serious topic"
-        ],
-        [
-            "Temporary",
-            "Permanent"
-        ],
-        [
-            "Funny topic",
-            "Serious topic"
-        ],
-        [
-            "Harmless",
-            "Harmful"
-        ],
-        [
-            "Quiet place",
-            "Loud place"
-        ],
-        [
-            "Role model",
-            "Bad Influence"
-        ],
-        [
-            "Least powerful god",
-            "Most powerful god"
-        ],
-        [
-            "Mild",
-            "Spicy"
-        ],
-        [
-            "Colorless",
-            "Colorful"
-        ],
-        [
-            "Bad Disney character",
-            "Good Disney character"
-        ],
-        [
-            "Gossip",
-            "News"
-        ],
-        [
-            "Ugly word",
-            "Beautiful word"
-        ],
-        [
-            "Weak",
-            "Strong"
-        ],
-        [
-            "Dangerous job",
-            "Safe job"
-        ],
-        [
-            "Vice",
-            "Virtue"
-        ],
-        [
-            "Easy to spell",
-            "Hard to spell"
-        ],
-        [
-            "Bad school",
-            "Good school"
-        ],
-        [
-            "Unpopular activity",
-            "Popular activity"
-        ],
-        [
-            "Proof that god exists",
-            "Proof that god doesn't exist"
-        ],
-        [
-            "Unhygienic",
-            "Hygienic"
-        ],
-        [
-            "Sad movie",
-            "Happy movie"
-        ],
-        [
-            "Normal pet",
-            "Exotic pet"
-        ],
-        [
-            "Popular",
-            "Elitist"
-        ],
-        [
-            "Cheap",
-            "Expensive"
-        ],
-        [
-            "Divided",
-            "Whole"
-        ],
-        [
-            "Plain",
-            "Fancy"
-        ],
-        [
-            "Dystopia",
-            "Utopia"
-        ],
-        [
-            "Lowbrow",
-            "Highbrow"
-        ],
-        [
-            "Tick",
-            "Tock"
-        ],
-        [
-            "Geek",
-            "Dork"
-        ],
-        [
-            "Derivative",
-            "Original"
-        ],
-        [
-            "Bad habit",
-            "Good habit"
-        ],
-        [
-            "Unsexy animal",
-            "Sexy animal"
-        ],
-        [
-            "Deep thought",
-            "Shallow thought"
-        ],
-        [
-            "Rough",
-            "Smooth"
-        ],
-        [
-            "Uncool",
-            "Cool"
-        ],
-        [
-            "Bad pizza topping",
-            "Good pizza topping"
-        ],
-        [
-            "Sustenance",
-            "Haute cuisine"
-        ],
-        [
-            "Guilty pleasure",
-            "Actually just bad"
-        ],
-        [
-            "Etiquette",
-            "Manners"
-        ],
-        [
-            "Scary animal",
-            "Nice animal"
-        ],
-        [
-            "Low quality",
-            "High quality"
-        ],
-        [
-            "Not a sandwich",
-            "A sandwich"
-        ],
-        [
-            "Easy subject",
-            "Hard subject"
-        ],
-        [
-            "Hard to find",
-            "Easy to find"
-        ],
-        [
-            "Has a bad reputation",
-            "Has a good reputation"
-        ],
-        [
-            "Slow",
-            "Fast"
-        ],
-        [
-            "Looks like a person",
-            "Doesn't look like a person"
-        ],
-        [
-            "Book was better",
-            "Movie was better"
-        ],
-        [
-            "Bad investment",
-            "Good investment"
-        ],
-        [
-            "Dangerous",
-            "Safe"
-        ],
-        [
-            "Culturally significant",
-            "Culturally insignificant"
-        ],
-        [
-            "Useless invention",
-            "Useful invention"
-        ],
-        [
-            "Unforgivable",
-            "Forgivable"
-        ],
-        [
-            "Forbidden",
-            "Encouraged"
-        ]
-    ]
+	"prompts" : [
+		["Wise","Intelligent"],
+		["Uncool","Cool"],
+		["Sad Song","Happy Song"],
+		["Requires Luck","Requires Skill"],
+		["Movie","Film"],
+		["Hot","Cold"],
+		["Need","Want"],
+		["The Worst","The Best"],
+		["Job","Career"],
+		["Underrated Game","Overrated Game"],
+		["Bad Mouthfeel","Good Mouthfeel"],
+		["Ineffective","Effective"],
+		["Action Move","Adventure Movie"],
+		["Soft","Hard"],
+		["Underrated Weapon","Overrated Weapon"],
+		["Normal Thing To Own","Weird Thing To Own"],
+		["Straight","Curvy"],
+		["Artisanal","Mass Produced"],
+		["Bad Man","Good Man"],
+		["For Kids","For Adults"],
+		["Inflexible","Flexible"],
+		["Replaceable","Irreplaceable"],
+		["Boring Topic","Fascinating Topic"],
+		["Weak","Strong"],
+		["Easy To Do","Hard To Do"],
+		["Worst Day Of The Year","Best Day Of The Year"],
+		["Unfashionable","Fashionable"],
+		["Unsexy Pokemon","Sexy Pokemon"],
+		["Heterogenous","Homogenous"],
+		["Smelly In A Bad Way","Smelly In A Good Way"],
+		["Ethical To Eat","Unethical To Eat"],
+		["Uncontroversial Topic","Controversial Topic"],
+		["Movie That Godzilla Would Ruin","Movie That Godzilla Would Improve"],
+		["Bad","Good"],
+		["Round Animal","Pointy Animal"],
+		["Old Fashioned","Avant Garde"],
+		["Funny Topic","Serious Topic"],
+		["Temporary","Permanent"],
+		["Funny Topic","Serious Topic"],
+		["Harmless","Harmful"],
+		["Quiet Place","Loud Place"],
+		["Role Model","Bad Influence"],
+		["Least Powerful God","Most Powerful God"],
+		["Mild","Spicy"],
+		["Colorless","Colorful"],
+		["Bad Disney Character","Good Disney Character"],
+		["Gossip","News"],
+		["Ugly Word","Beautiful Word"],
+		["Weak","Strong"],
+		["Dangerous Job","Safe Job"],
+		["Vice","Virtue"],
+		["Easy To Spell","Hard To Spell"],
+		["Bad School","Good School"],
+		["Unpopular Activity","Popular Activity"],
+		["Proof That God Exists","Proof That God Doesn't Exist"],
+		["Unhygienic","Hygienic"],
+		["Sad Movie","Happy Movie"],
+		["Normal Pet","Exotic Pet"],
+		["Popular","Elitist"],
+		["Cheap","Expensive"],
+		["Divided","Whole"],
+		["Plain","Fancy"],
+		["Dystopia","Utopia"],
+		["Lowbrow","Highbrow"],
+		["Tick","Tock"],
+		["Geek","Dork"],
+		["Derivative","Original"],
+		["Bad Habit","Good Habit"],
+		["Unsexy Animal","Sexy Animal"],
+		["Deep Thought","Shallow Thought"],
+		["Rough","Smooth"],
+		["Uncool","Cool"],
+		["Bad Pizza Topping","Good Pizza Topping"],
+		["Sustenance","Haute Cuisine"],
+		["Guilty Pleasure","Actually Just Bad"],
+		["Etiquette","Manners"],
+		["Scary Animal","Nice Animal"],
+		["Low Quality","High Quality"],
+		["Not A Sandwich","A Sandwich"],
+		["Easy Subject","Hard Subject"],
+		["Hard To Find","Easy To Find"],
+		["Has A Bad Reputation","Has A Good Reputation"],
+		["Slow","Fast"],
+		["Looks Like A Person","Doesn't Look Like A Person"],
+		["Book Was Better","Movie Was Better"],
+		["Bad Investment","Good Investment"],
+		["Dangerous","Safe"],
+		["Culturally Significant","Culturally Insignificant"],
+		["Useless Invention","Useful Invention"],
+		["Unforgivable","Forgivable"],
+		["Forbidden","Encouraged"]
+	]
 }
