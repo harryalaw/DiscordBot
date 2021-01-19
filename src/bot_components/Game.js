@@ -4,8 +4,9 @@ const Board = require('./board.js');
 const { prompts } = require('../../assets/text_assets/prompts.json');
 
 class Game {
-    constructor(channel) {
+    constructor(channel, member) {
         this.channel = channel;
+        this.owner = member;
         this.players = new Collection();
         this.teams = [new Set(), new Set()];
         this.started = false;
@@ -25,8 +26,8 @@ class Game {
     setTeam(player, team = undefined) {
         if (!this.players.has(player)) return;
         if (!isNaN(team)) team %= 2;
-        if (team != 1 || team != 0) {
-            team = this.teams[0].size < this.teams[1].size ? 0 : 1;
+        if (team !== 0 && team !== 1) {
+            team = this.teams[0].size <= this.teams[0].size ? 0 : 1;
         }
         this.teams[team].add(player.id);
         this.players.set(player, team);

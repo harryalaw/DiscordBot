@@ -3,8 +3,9 @@ const Util = require('../utility/Util.js');
 const { prompts } = require('../../assets/text_assets/prompts.json');
 
 module.exports = {
-    'name': 'sendboard',
-    'aliases': ['s', 'send', 'start'],
+    'name': 'start',
+    'aliases': ['s', 'sendboard', 'send'],
+    'description': `Starts the next round of wavelength, I'll send a DM to whoever uses it explaining what to do next`,
     execute(message, args, games) {
         const { channel, author, member } = message;
         if (!games.has(channel.id)) return;

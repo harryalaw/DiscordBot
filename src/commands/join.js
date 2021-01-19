@@ -2,7 +2,9 @@ const Util = require('../utility/Util.js')
 
 module.exports = {
     'name': 'join',
-    'description': "Join a game of wavelength",
+    'description': "Join a game of wavelength.",
+    'usage': '[] | [1 or 2]',
+    'argExplanation': `You can specify the team you want to join by including the number, otherwise I'll put you in the smaller team`,
     execute(message, args, games) {
         const { channel, member } = message;
         if (!games.has(message.channel.id)) return message.reply(`There's no game in this channel!`);
