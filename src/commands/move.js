@@ -2,10 +2,10 @@ const { prefix } = require('../../config.json');
 
 module.exports = {
     'name': 'move',
-    'description': 'Move the dial by the specified number of degrees',
+    'description': 'Move the dial by the specified number of degrees.',
     'aliases': ['nudge'],
-    'usage': '[degrees]',
-    'argExplanation': 'Use a positive value for degrees to move the dial right, and a negative value to move the dial left',
+    'usage': ['[degrees]'],
+    'argExplanation': 'Use a positive value for degrees to move the dial clockwise, and a negative value to move the dial counterclockwise.',
     execute(message, args, games) {
         const { channel, member } = message;
         if (!games.has(channel.id)) return

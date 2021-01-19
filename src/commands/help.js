@@ -2,9 +2,9 @@ const { prefix } = require('../../config.json');
 
 module.exports = {
     name: 'help',
-    description: 'List all of my commands or info about a specific command',
+    description: 'List all of my commands or get info about a specific command.',
     aliases: ['commands'],
-    usage: '[command name]',
+    usage: ['[command name]'],
     execute(message, args) {
         const data = [];
         const { commands } = message.client;
@@ -32,8 +32,13 @@ module.exports = {
         data.push(`**Name:** ${command.name}`);
         if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(', ')}`);
         if (command.description) data.push(`**Description:** ${command.description}`);
-        if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
-        if (command.argExplanation) data.push(`**Usage Explained:** The "|" separate different ways you can use the command with "[ ]" surrounding your options. ${command.argExplanation}`);
+        if (command.usage) {
+            data.push(`**Usage:**`);
+            command.usage.forEach(mode => {
+                data.push(`\`${prefix}${command.name} ${mode}\``);
+            });
+        }
+        if (command.argExplanation) data.push(`**Usage Explained:** ${command.argExplanation}`);
 
         message.channel.send(data, { split: true });
     }

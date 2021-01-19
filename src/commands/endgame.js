@@ -4,7 +4,7 @@ const { BOT_OWNER } = require('../../config.json');
 module.exports = {
     'name': 'endgame',
     'aliases': ['end', 'reset'],
-    'description': 'Ends the game of wavelength in this channel',
+    'description': 'Ends the game of wavelength in this channel.',
     execute(message, args, games) {
         const { channel, member } = message;
         // check permission of user

@@ -1,6 +1,6 @@
 module.exports = {
     name: 'reload',
-    description: 'Reloads a command, used for debugging purposes',
+    description: 'Reloads a command, used for debugging purposes.',
     aliases: ['r'],
     execute(message, args, games) {
         if (!args.length) return message.channel.send(`You didn't pass any command to reload, ${message.author}!`);

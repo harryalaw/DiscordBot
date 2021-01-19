@@ -2,7 +2,7 @@ const Util = require('../utility/Util.js');
 
 module.exports = {
     name: 'list',
-    description: 'Lists current players in the game and which teams they are on',
+    description: 'Lists current players in the game and which teams they are on.',
     execute(message, args, games) {
         const { channel } = message;
         if (!games.has(channel.id)) return;

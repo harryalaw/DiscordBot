@@ -3,7 +3,7 @@ const { prefix } = require('../../config.json')
 
 module.exports = {
     'name': 'creategame',
-    'description': 'Create a new game of wavelength in this channel',
+    'description': 'Create a new game of wavelength in this channel.',
     'aliases': ['create', 'c'],
     execute(message, args, games) {
         const { channel } = message;

@@ -2,9 +2,9 @@ const Util = require('../utility/Util.js');
 
 module.exports = {
     'name': 'changeteam',
-    'description': 'Change which team you are on or randomise all the teams',
-    'usage': `[] | [1 or 2] | shuffle`,
-    'argExplanation': `If you add a team number then you join that team otherwise I'll just swap the team you're on. If you use shuffle then I'll randomise the teams.`,
+    'description': 'Change which team you are on or randomise all the teams.',
+    'usage': ['', '[team number]', 'shuffle'],
+    'argExplanation': `If no team is specified you will join the smaller team. Otherwise you join the team you chose. If the shuffle mode is used then both teams are randomised.`,
     execute(message, args, games) {
         const { channel, member } = message;
         if (!games.has(channel.id)) return channel.send("There's no game in this channel!");

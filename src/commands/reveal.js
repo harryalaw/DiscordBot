@@ -1,6 +1,6 @@
 module.exports = {
     'name': 'reveal',
-    'description': "Let's the clue giver reveal the board and triggers the end of the round",
+    'description': "Let's the clue giver reveal the board and triggers the end of the round.",
     execute(message, args, games) {
         const { channel, author, member } = message;
         if (!games.has(channel.id)) return;
