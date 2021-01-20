@@ -6,8 +6,7 @@ module.exports = {
     execute(message, args, games) {
         const { channel } = message;
         let data = [];
-        // data.push(`In Wavelength you are trying to turn the red dial as close to the center of a target as you can. However the target is randomised and you'll have to rely on one of your teammates to let you know where it is.`);
-        data.push(`Each round someone will elect themselves as the psychic by typing \`${prefix}send\`. They will then be shown where the target is and given the choice between some topics they can give the clue on. The topics represent a spectrum with two opposing concepts on each end - "Hot-Cold" or "Dangerous-Safe".`);
+        data.push(`Each round one player will elect themselves as the psychic by typing \`${prefix}start\`. They will then be shown where the target is and given the choice between some topics they can give the clue on. The topics represent a spectrum with two opposing concepts on each end - "Hot-Cold" or "Dangerous-Safe".`);
         channel.send(data)
         data = [];
 
