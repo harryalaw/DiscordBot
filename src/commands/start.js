@@ -1,22 +1,28 @@
 const Discord = require('discord.js');
 const Util = require('../utility/Util.js');
 const { prompts } = require('../../assets/text_assets/prompts.json');
+const { prefix } = require('../../config.json');
 
 module.exports = {
     name: 'start',
     aliases: ['send'],
     description: `Starts the next round of wavelength, I'll send a DM to whoever uses it explaining what to do next.`,
     needsGame: true,
+    needsPlayer: true,
+    needsActiveTeam: true,
     execute(message, args, games) {
         const { channel, author, member } = message;
         if (!games.has(channel.id)) return;
 
         const game = games.get(channel.id);
-        if (game.started) return message.channel.send("A round has already started!");
+        // if (game.started) return channel.send("A round has already started!");
+        // const userTeam = game.players.get(member);
+        // if (userTeam === 'undefined') return channel.send(`You need to \`${prefix}join\` the game to play`);
+        // if (userTeam === (game.turn ^ 1)) return channel.send(`It's not your team's turn to play.`);
 
         const choices = Util.sample(prompts, 3)
         game.clueGiver = author.id;
-        game.turn = game.players.get(member);
+        // game.turn = game.players.get(member);
         game.started = true;
         game.resetPrompt();
         game.board.setFanAngle();
