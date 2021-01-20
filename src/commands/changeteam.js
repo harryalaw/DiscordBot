@@ -1,14 +1,15 @@
 const Util = require('../utility/Util.js');
 
 module.exports = {
-    'name': 'changeteam',
-    'description': 'Change which team you are on or randomise all the teams.',
-    'usage': ['', '[team number]', 'shuffle'],
-    'argExplanation': `If no team is specified you will join the smaller team. Otherwise you join the team you chose. If the shuffle mode is used then both teams are randomised.`,
+    name: 'changeteam',
+    description: 'Change which team you are on or randomise all the teams.',
+    usage: ['', '[team number]', 'shuffle'],
+    argExplanation: `If no team is specified you will join the smaller team. Otherwise you join the team you chose. If the shuffle mode is used then both teams are randomised.`,
+    needsGame: true,
     execute(message, args, games) {
         const { channel, member } = message;
-        if (!games.has(channel.id)) return channel.send("There's no game in this channel!");
         const game = games.get(channel.id);
+
         if (args[0] == 'shuffle') {
             game.shuffleTeams();
             return channel.send(`I've randomised the teams!`);

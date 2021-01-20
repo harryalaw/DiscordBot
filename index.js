@@ -26,7 +26,7 @@ client.on('message', message => {
 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
     if (!command) return;
-
+    if (command.needsGame && !games.has(channel.id)) return message.reply(`There's no game in this channel!`);
     if (command.args && !args.length) {
         return channel.send(`You didn't provide any arguments, ${message.author}`);
     }

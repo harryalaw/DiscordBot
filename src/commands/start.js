@@ -3,15 +3,16 @@ const Util = require('../utility/Util.js');
 const { prompts } = require('../../assets/text_assets/prompts.json');
 
 module.exports = {
-    'name': 'start',
-    'aliases': ['send'],
-    'description': `Starts the next round of wavelength, I'll send a DM to whoever uses it explaining what to do next.`,
+    name: 'start',
+    aliases: ['send'],
+    description: `Starts the next round of wavelength, I'll send a DM to whoever uses it explaining what to do next.`,
+    needsGame: true,
     execute(message, args, games) {
         const { channel, author, member } = message;
         if (!games.has(channel.id)) return;
 
         const game = games.get(channel.id);
-        if (game.started) return message.channel.send("A round has already started! 😱");
+        if (game.started) return message.channel.send("A round has already started!");
 
         const choices = Util.sample(prompts, 3)
         game.clueGiver = author.id;

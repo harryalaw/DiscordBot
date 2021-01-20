@@ -3,12 +3,13 @@ const Util = require('../utility/Util.js');
 module.exports = {
     name: 'list',
     description: 'Lists current players in the game and which teams they are on.',
+    needsGame: true,
     execute(message, args, games) {
         const { channel } = message;
-        if (!games.has(channel.id)) return;
         const game = games.get(channel.id);
-
+        // Currently the next line does nothing since the creator is always in the game.
         if (game.players.size === 0) return message.channel.send(`No one is in the lobby at the moment!`)
+
         const names = []
         const team1 = [];
         const team2 = [];

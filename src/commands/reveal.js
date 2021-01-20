@@ -1,11 +1,12 @@
 const { prefix } = require('../../config.json');
 
 module.exports = {
-    'name': 'reveal',
-    'description': "Let's the clue giver reveal the board and triggers the end of the round.",
+    name: 'reveal',
+    description: "Let's the clue giver reveal the board and triggers the end of the round.",
+    needsGame: true,
     execute(message, args, games) {
         const { channel, author, member } = message;
-        if (!games.has(channel.id)) return;
+
         const game = games.get(channel.id);
         if (!game.started) return channel.send(`The round is over, start a new one with !send`)
         if (game.clueGiver != author.id) return channel.send(`Only the cluegiver can reveal the answer!`);
