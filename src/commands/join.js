@@ -8,8 +8,8 @@ module.exports = {
     needsGame: true,
     execute(message, args, games) {
         const { channel, member } = message;
-
         let game = games.get(channel.id);
+        if (game.players.has(member)) return;
         game.addPlayer(member, args[0]);
         channel.send(`Added ${Util.getName(member)} to Team ${game.players.get(member) + 1}`);
     }
