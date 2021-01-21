@@ -30,7 +30,7 @@ Heterogenous:Homogenous
 Smelly in a bad way:Smelly in a good way
 Ethical to eat:Unethical to eat
 Uncontroversial topic:Controversial topic
-Movie that Godzilla would ruin:Movie that Godzilla would improve
+Film that Godzilla would ruin:Film that Godzilla would improve
 Bad:Good
 Round animal:Pointy animal
 Old fashioned:Avant garde
