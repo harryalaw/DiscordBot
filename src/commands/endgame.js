@@ -3,7 +3,6 @@ const { BOT_OWNER } = require('../../config.json');
 
 module.exports = {
     name: 'endgame',
-    aliases: ['end', 'reset'],
     description: 'Ends the game of wavelength in this channel.',
     needsGame: true,
     execute(message, args, games) {
