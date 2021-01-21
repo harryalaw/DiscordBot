@@ -1,13 +1,12 @@
 const { MessageAttachment } = require('discord.js');
 const Jimp = require('jimp');
-const { words } = require('../../assets/text_assets/prompts.json');
+const { words } = require('./../../assets/text_assets/prompts.json');
+const { colors } = require('./../../assets/text_assets/colors.json');
+const Coordinate = require('./../utility/coordinate.js');
+const Wordboard = require('./../bot_components/Wordboard');
+const Util = require('./../utility/Util');
+
 const ArtAssets = {
-    // "overlay_open": './assets/art_assets/overlay-open.png',
-    // "overlay_closed": './assets/art_assets/overlay-closed.png',
-    // "dial": './assets/art_assets/dial.png',
-    // "fan": './assets/art_assets/fan.png',
-    // "background": './assets/art_assets/background.png',
-    // HAVEN'T YET MADE THE SCALED DOWN CLOSED OVERLAY
     "background_open": './assets/art_assets/650x400/background-open.png',
     "background_closed": './assets/art_assets/650x400/background-closed.png',
     "dial": './assets/art_assets/650x400/dial.png',
@@ -15,14 +14,6 @@ const ArtAssets = {
     "overlay": './assets/art_assets/650x400/overlay.png',
     "left_arrow": './assets/art_assets/650x400/left_arrow.png',
     "right_arrow": './assets/art_assets/650x400/right_arrow.png',
-    "wordboard": './assets/art_assets/650x400/wordboard.png',
-}
-
-class Coordinate {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
 }
 
 class Board {
@@ -35,23 +26,24 @@ class Board {
     // Our overlay wants the circle to placed with center (325,325)
     // The fan has diameter 551 -> so needs to be placed at 325-275.5
     #SCALEFACTOR = 0.5
-    // #CIRCLE_PLACEMENT = new Coordinate(this.#SCALEFACTOR * (650 - 551), this.#SCALEFACTOR * (650 - 551));
     #CIRCLE_PLACEMENT = new Coordinate(325 - 275.5, 325 - 275.5);
 
 
     #BOX_WIDTH = 170;
+    #BOX_HEIGHT = 110;
     #L_BOX_TL = new Coordinate(155, 290);
     #L_BOX_BR = new Coordinate(325, 400);
     #R_BOX_TL = new Coordinate(325, 290);
     #R_BOX_BR = new Coordinate(495, 400);
 
-    #L_ARROW_TL = new Coordinate(198, 302);
-    #R_ARROW_TL = new Coordinate(388, 302)
+    #L_ARROW_TL = new Coordinate(198, 312);
+    #R_ARROW_TL = new Coordinate(388, 312)
 
     #TEXT_BOX_WIDTH = 120;
     #TEXT_BOX_HEIGHT = 70;
-    #L_TEXT_TL = new Coordinate(162.5, 312.5);
-    #R_TEXT_TL = new Coordinate(367.5, 312.5);
+    // Coordinates of text box corners are relative to the wordbox;
+    #L_TEXT_TL = new Coordinate(7.5, 22.5);
+    #R_TEXT_TL = new Coordinate(170 + 42.5, 22.5);
     ////////////////////////////////////////////////////
 
     constructor(prompt) {
@@ -59,6 +51,7 @@ class Board {
         this.fanAngle = -45;
         this.prompt = prompt;
         this.setFanAngle();
+        this.colors = Util.sample(colors, 2);
     }
 
 
@@ -92,26 +85,17 @@ class Board {
         }
 
         out.blit(await Jimp.read(ArtAssets.overlay), 0, 0);
-        out.blit(await Jimp.read(ArtAssets.wordboard), this.#L_BOX_TL.x, this.#L_BOX_TL.y);
+
+        let wordboard = new Wordboard(colors, this.prompt, this.#BOX_WIDTH * 2,
+            this.#BOX_HEIGHT, this.#TEXT_BOX_WIDTH, this.#TEXT_BOX_HEIGHT,
+            this.#L_TEXT_TL, this.#R_TEXT_TL)
+
+        out.blit(await Jimp.read(wordboard.canvas.toBuffer()), this.#L_BOX_TL.x, this.#L_BOX_TL.y);
         out.blit(await Jimp.read(ArtAssets.left_arrow), this.#L_ARROW_TL.x, this.#L_ARROW_TL.y);
         out.blit(await Jimp.read(ArtAssets.right_arrow), this.#R_ARROW_TL.x, this.#R_ARROW_TL.y);
 
         let dial = await Jimp.read(ArtAssets.dial).then(dial => dial.rotate(this.dialAngle, false));
         out.blit(dial, this.#CIRCLE_PLACEMENT.x, this.#CIRCLE_PLACEMENT.y);
-
-        // Add prompt text to image
-        await Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font => {
-            out.print(font, this.#L_TEXT_TL.x, this.#L_TEXT_TL.y, {
-                text: this.prompt[0],
-                alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
-                alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE
-            }, this.#TEXT_BOX_WIDTH, this.#TEXT_BOX_HEIGHT);
-            out.print(font, this.#R_TEXT_TL.x, this.#R_TEXT_TL.y, {
-                text: this.prompt[1],
-                alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
-                alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE
-            }, this.#TEXT_BOX_WIDTH, this.#TEXT_BOX_HEIGHT);
-        });
 
         return out;
     }
