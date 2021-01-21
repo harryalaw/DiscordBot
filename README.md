@@ -12,4 +12,4 @@ A discord bot I created to let me and my friends play [Wavelength](https://www.w
 | start | Sends the user a DM with instructions on how to start the next round | |
 | move | Moves the dial a number of degrees. Positive moves clockwise, negative counterclockwise | [degrees] |
 | reveal | The cluegiver can reveal the board and triggers the end of a round  | |
-| end | Ends the game in the channel | |
+| endgame | Ends the game in the channel | |
