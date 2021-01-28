@@ -1,5 +1,5 @@
 const { Collection } = require('discord.js');
-const Util = require('../utility/util.js');
+const Util = require('../utility/Util.js');
 const Board = require('./board.js');
 const { prompts } = require('../../assets/text_assets/prompts.json');
 

@@ -1,5 +1,4 @@
 const Canvas = require('canvas');
-const Coordinate = require('../utility/coordinate');
 
 
 class Wordboard {

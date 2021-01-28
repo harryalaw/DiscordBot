@@ -2,7 +2,7 @@ const { MessageAttachment } = require('discord.js');
 const Jimp = require('jimp');
 const { words } = require('./../../assets/text_assets/prompts.json');
 const { colors } = require('./../../assets/text_assets/colors.json');
-const Coordinate = require('./../utility/coordinate.js');
+const Coordinate = require('./../utility/coordinate');
 const Wordboard = require('./../bot_components/Wordboard');
 const Util = require('./../utility/Util');
 
