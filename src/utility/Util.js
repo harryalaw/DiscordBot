@@ -1,21 +1,4 @@
 module.exports = class Util {
-    // static countVotes(votes) {
-    //     let isUnique = true;
-    //     let mostVotes = 0;
-    //     let mostEmoji;
-    //     for (const [emoji, voteCount] of votes) {
-    //         if (voteCount > mostVotes) {
-    //             mostVotes = voteCount;
-    //             mostEmoji = emoji;
-    //             isUnique = true;
-    //         }
-    //         else if (voteCount == mostVotes) {
-    //             isUnique = false;
-    //         }
-    //     }
-    //     return isUnique === true ? mostEmoji : "Tie";
-
-    // }
 
     static pickRandom(array) {
         return array[Math.floor(Math.random() * array.length)];
