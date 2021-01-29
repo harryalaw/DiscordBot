@@ -5,6 +5,7 @@ module.exports = {
     description: 'List all of my commands or get info about a specific command.',
     aliases: ['commands'],
     usage: ['[command name]'],
+    cooldown: 1,
     execute(message, args) {
         const data = [];
         const { commands } = message.client;
@@ -38,7 +39,9 @@ module.exports = {
                 data.push(`\`${prefix}${command.name} ${mode}\``);
             });
         }
+
         if (command.argExplanation) data.push(`**Usage Explained:** ${command.argExplanation}`);
+        data.push(`**Cooldown**: ${command.cooldown || 3}`);
 
         message.channel.send(data, { split: true });
     }

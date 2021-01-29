@@ -7,6 +7,7 @@ module.exports = {
     argExplanation: `If no team is specified you will join the smaller team. Otherwise you join the team you chose. If the shuffle mode is used then both teams are randomised.`,
     needsGame: true,
     needsPlayer: true,
+    cooldown: 5,
     execute(message, args, games) {
         const { channel, member } = message;
         const game = games.get(channel.id);

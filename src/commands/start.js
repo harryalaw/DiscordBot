@@ -10,26 +10,22 @@ module.exports = {
     needsGame: true,
     needsPlayer: true,
     needsActiveTeam: true,
+    cooldown: 5,
     execute(message, args, games) {
         const { channel, author, member } = message;
-        if (!games.has(channel.id)) return;
-
         const game = games.get(channel.id);
-        // if (game.started) return channel.send("A round has already started!");
-        // const userTeam = game.players.get(member);
-        // if (userTeam === 'undefined') return channel.send(`You need to \`${prefix}join\` the game to play`);
-        // if (userTeam === (game.turn ^ 1)) return channel.send(`It's not your team's turn to play.`);
+        if (game.started) return;
 
         const choices = Util.sample(prompts, 3)
         game.clueGiver = author.id;
-        // game.turn = game.players.get(member);
         game.started = true;
         game.resetPrompt();
         game.board.setFanAngle();
 
         game.board.dialAngle = 0;
-        const preamble = `I'll be sending you a choice of a few spectrums to choose between,
-but first I'll show you where the target will be.`
+        game.board.setNewColors();
+
+        const preamble = `I'll be sending you a choice of a few spectrums to choose between, but first I'll show you where the target will be.`
         const text = `Here are the spectrums you get to choose between:
         \n:one: ${choices[0][0]} - ${choices[0][1]}\n:two: ${choices[1][0]} - ${choices[1][1]}\n:three: ${choices[2][0]} - ${choices[2][1]}
         \nLook at where the target’s center is located spatially along the visible area of the wheel. Now think of a clue that is conceptually where the target is located ON THE SPECTRUM between the two concepts on your card.
@@ -57,6 +53,10 @@ but first I'll show you where the target will be.`
                     }).catch(console.error);
                 }).catch(console.error);
             }).catch(console.error);
+        }).catch(error => {
+            console.error(`Could not send start DM to ${message.author.tag}.\n`);
+            message.reply('It seems like I can\'t DM you! Do you have DMs disabled? You can enable them for this server by changing your privacy settings in the top left.');
+            game.started = false;
         });
     }
 }

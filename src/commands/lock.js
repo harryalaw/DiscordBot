@@ -1,17 +1,19 @@
 const { prefix } = require('../../config.json');
 
 module.exports = {
-    name: 'reveal',
+    name: 'lock',
     description: "Let's the clue giver reveal the board and triggers the end of the round.",
+    aliases: ["lockin", "confirm"],
     needsGame: true,
     needsPlayer: true,
     needsRound: true,
     needsActiveTeam: true,
+    cooldown: 5,
     execute(message, args, games) {
-        const { channel, author, member } = message;
+        const { channel } = message;
 
         const game = games.get(channel.id);
-        if (game.clueGiver != author.id) return channel.send(`Only the cluegiver can reveal the answer!`);
+        // if (game.clueGiver != author.id) return channel.send(`Only the cluegiver can reveal the answer!`);
         game.started = false
 
         let scoredPoints;
@@ -27,7 +29,7 @@ module.exports = {
         }
 
         const reactions = [];
-        channel.send(`The other team now gets to guess if they think the target is to the left or the right of the dial.\nDiscuss and once you've decided someone should react with ⬅️ or ➡️ to let me know`)
+        channel.send(`The other team now gets to guess if they think the target is to the left or the right of the dial. If they guess the direction correctly they will get 1 point!\nDiscuss and once you've decided someone should react with ⬅️ or ➡️ to let me know`)
             .then(msg => {
                 reactions.push(msg.react("⬅️"));
                 reactions.push(msg.react("➡️"));

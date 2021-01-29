@@ -3,6 +3,7 @@ const { prefix } = require('../../config.json')
 module.exports = {
     name: 'rules',
     description: 'Explains the rules of Wavelength',
+    cooldown: 30,
     execute(message, args, games) {
         const { channel } = message;
         let data = [];

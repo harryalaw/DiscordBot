@@ -10,6 +10,7 @@ module.exports = {
     needsPlayer: true,
     needsRound: true,
     needsActiveTeam: true,
+    cooldown: 5,
     execute(message, args, games) {
         const { channel, member } = message;
 

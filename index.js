@@ -13,6 +13,8 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
+const cooldowns = new Discord.Collection();
+
 client.once('ready', () => {
     console.log(`UP AND AT THEM`);
 })
@@ -43,6 +45,34 @@ client.on('message', message => {
     if (command.args && !args.length) {
         return channel.send(`You didn't provide any arguments, ${message.author}`);
     }
+
+    // Cooldowns for commands
+    if (!cooldowns.has(command.name)) {
+        cooldowns.set(command.name, new Discord.Collection());
+    }
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.name);
+    // cooldown for each command will default to 3 seconds if not defined
+    const cooldownAmount = (command.cooldown || 3) * 1000;
+
+    if (timestamps.has(message.author.id)) {
+        const earliestNextUse = timestamps.get(message.author.id) + cooldownAmount;
+
+        if (now < earliestNextUse) {
+            const timeLeft = (earliestNextUse - now) / 1000;
+            try {
+                return message.author.send(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing \`${command.name}\` command))`)
+            } catch (error) {
+                console.error(`Could not send DM to ${message.author.tag}.`);
+                message.reply(`It seems I can't DM you! Do you have DMs disabled?`);
+            }
+        }
+    }
+    timestamps.set(message.author.id, now);
+    // Delete timestamps once the time has passed
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+
+
     try {
         command.execute(message, args, games);
     } catch (error) {

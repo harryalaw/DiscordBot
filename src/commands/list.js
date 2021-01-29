@@ -4,6 +4,7 @@ module.exports = {
     name: 'list',
     description: 'Lists current players in the game and which teams they are on.',
     needsGame: true,
+    cooldown: 10,
     execute(message, args, games) {
         const { channel } = message;
         const game = games.get(channel.id);

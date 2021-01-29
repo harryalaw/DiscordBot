@@ -6,6 +6,7 @@ module.exports = {
     name: 'creategame',
     description: 'Create a new game of wavelength in this channel.',
     aliases: ['create', 'c'],
+    cooldown: 30,
     execute(message, args, games) {
         const { channel, member } = message;
         if (channel.type === 'dm') return message.channel.send("Sorry but we can't just play with two of us!");

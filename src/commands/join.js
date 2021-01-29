@@ -6,6 +6,7 @@ module.exports = {
     usage: ['', '[team number]'],
     argExplanation: `You can specify the team you want to join by including the number, otherwise I'll put you in the smaller team`,
     needsGame: true,
+    cooldown: 5,
     execute(message, args, games) {
         const { channel, member } = message;
         let game = games.get(channel.id);
