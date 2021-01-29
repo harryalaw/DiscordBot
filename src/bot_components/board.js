@@ -51,7 +51,8 @@ class Board {
         this.fanAngle = -45;
         this.prompt = prompt;
         this.setFanAngle();
-        this.colors = Util.sample(colors, 2);
+        this.colors;
+        this.setNewColors();
     }
 
 
@@ -71,6 +72,12 @@ class Board {
         this.fanAngle = angle;
     }
 
+    setNewColors() {
+        this.colors = Util.sample(colors, 2);
+    }
+
+
+
     async makeBoard(isSecret) {
         let out;
         if (isSecret) {
@@ -86,7 +93,7 @@ class Board {
 
         out.blit(await Jimp.read(ArtAssets.overlay), 0, 0);
 
-        let wordboard = new Wordboard(colors, this.prompt, this.#BOX_WIDTH * 2,
+        let wordboard = new Wordboard(this.colors, this.prompt, this.#BOX_WIDTH * 2,
             this.#BOX_HEIGHT, this.#TEXT_BOX_WIDTH, this.#TEXT_BOX_HEIGHT,
             this.#L_TEXT_TL, this.#R_TEXT_TL)
 
