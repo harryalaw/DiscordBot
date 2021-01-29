@@ -3,7 +3,7 @@ const Util = require('./../utility/Util');
 
 module.exports = {
     name: 'lock',
-    description: "Let's the anyone on the active team lock in their answer and trigger the end of the round.",
+    description: "Let's anyone on the active team lock in their answer and trigger the end of the round.",
     aliases: ["lockin", "confirm"],
     needsGame: true,
     needsPlayer: true,
