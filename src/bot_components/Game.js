@@ -1,4 +1,4 @@
-const { Collection } = require('discord.js');
+const { Collection, MessageEmbed } = require('discord.js');
 const Util = require('../utility/Util.js');
 const Board = require('./board.js');
 const { prompts } = require('../../assets/text_assets/prompts.json');
@@ -36,6 +36,16 @@ class Game {
 
     setScoreCap(score) {
         this.scoreCap = score;
+    }
+
+    displayScore() {
+        const scoreEmbed = new MessageEmbed()
+            .setColor(this.board.colors[0])
+            .addFields(
+                { name: 'Team 1', value: this.scores[0], inline: true },
+                { name: 'Team 2', value: this.scores[1], inline: true },
+            )
+        return scoreEmbed;
     }
 
     shuffleTeams() {
