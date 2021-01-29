@@ -60,12 +60,11 @@ client.on('message', message => {
 
         if (now < earliestNextUse) {
             const timeLeft = (earliestNextUse - now) / 1000;
-            try {
-                return message.author.send(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing \`${command.name}\` command))`)
-            } catch (error) {
-                console.error(`Could not send DM to ${message.author.tag}.`);
-                message.reply(`It seems I can't DM you! Do you have DMs disabled?`);
-            }
+            return message.author.send(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing \`${command.name}\` command))`)
+                .catch(error => {
+                    console.error(`Could not send DM to ${message.author.tag}.`);
+                    message.reply(`It seems I can't DM you! Do you have DMs disabled?`);
+                });
         }
     }
     timestamps.set(message.author.id, now);
