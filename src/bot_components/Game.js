@@ -18,6 +18,11 @@ class Game {
         this.clueGiver;
     }
 
+    // Add/remove Players (pass in the member value)
+    removePlayer(player) {
+        this.teams[this.players.get(player)].delete(player.id);
+        this.players.delete(player);
+    }
     addPlayer(player, team = undefined) {
         this.players.set(player, team)
         this.setTeam(player, team);
