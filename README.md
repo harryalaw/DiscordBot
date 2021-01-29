@@ -13,3 +13,10 @@ A discord bot I created to let me and my friends play [Wavelength](https://www.w
 | move | Moves the dial a number of degrees. Positive moves clockwise, negative counterclockwise | [degrees] |
 | reveal | The cluegiver can reveal the board and triggers the end of a round  | |
 | endgame | Ends the game in the channel | |
+
+
+## Config File
+In order to set up will also need to create a config.json file in the main folder. This needs to contain 3 fields: "prefix", "token", and "BOT_OWNER"
+Prefix is the prefix that you want to use for bot commands
+Token is the bot token
+BOT_OWNER I've set up as myself on my copy, it gives them the power to endgames at the moment
