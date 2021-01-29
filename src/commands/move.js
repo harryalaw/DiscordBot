@@ -10,14 +10,11 @@ module.exports = {
     needsPlayer: true,
     needsRound: true,
     needsActiveTeam: true,
-    cooldown: 5,
+    cooldown: 2,
     execute(message, args, games) {
-        const { channel, member } = message;
+        const { channel } = message;
 
         const game = games.get(channel.id);
-        // if (!game.teams[game.turn].has(member.id)) {
-        //     return message.channel.send(`Only the players on Team ${game.turn + 1} can move the dial`);
-        // }
 
         if (isNaN(args[0])) {
             return message.reply(`Type your messages like \`${prefix}move 10\` or \`${prefix}move -5\``);

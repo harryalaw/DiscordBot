@@ -48,7 +48,7 @@ class Board {
 
     constructor(prompt) {
         this.dialAngle = 0;
-        this.fanAngle = -45;
+        this.fanAngle = 0;
         this.prompt = prompt;
         this.setFanAngle();
         this.colors;
