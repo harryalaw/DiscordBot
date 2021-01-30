@@ -18,5 +18,7 @@ A discord bot I created to let me and my friends play [Wavelength](https://www.w
 ## Config File
 In order to set up will also need to create a config.json file in the main folder. This needs to contain 3 fields: "prefix", "token", and "BOT_OWNER"
 Prefix is the prefix that you want to use for bot commands
+
 Token is the bot token
-BOT_OWNER I've set up as myself on my copy, it gives them the power to endgames at the moment
+
+BOT_OWNER is your discord ID, it gives the chosen user the power to endgames without being the creator
