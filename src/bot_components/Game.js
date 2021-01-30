@@ -19,13 +19,21 @@ class Game {
     }
 
     // Add/remove Players (pass in the member value)
-    removePlayer(player) {
-        this.teams[this.players.get(player)].delete(player.id);
-        this.players.delete(player);
+    removePlayer(member) {
+        this.teams[this.players.get(member)].delete(member.id);
+        this.players.delete(member);
+        // If game owner leaves, reassign to another player, if no players are in the game do nothing.
+        if (this.owner.id === member.id && this.players.size >= 1) {
+            this.owner = Array.from(this.players.keys())[0];
+        }
     }
-    addPlayer(player, team = undefined) {
-        this.players.set(player, team)
-        this.setTeam(player, team);
+    addPlayer(member, team = undefined) {
+        this.players.set(member, team)
+        this.setTeam(member, team);
+        // If game owner no longer in the game assign the game owner to the next person to join
+        if (!this.players.has(this.owner)) {
+            this.owner = member;
+        }
     }
 
     setTeam(player, team = undefined) {
