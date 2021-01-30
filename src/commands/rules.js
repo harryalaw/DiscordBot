@@ -37,7 +37,7 @@ const ruleSummary = [
     },
     {
         "name": "Other help",
-        "value": "If you need to know what commands you can use and how to use them, you can type \`${prefix}help\` to see a list of all my commands"
+        "value": `If you need to know what commands you can use and how to use them, you can type \`${prefix}help\` to see a list of all my commands`
     }
 ];
 
