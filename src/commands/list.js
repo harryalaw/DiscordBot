@@ -30,7 +30,7 @@ module.exports = {
             .addFields(
                 { name: 'Team 1', value: team1FieldVal, inline: true },
                 { name: 'Team 2', value: team2FieldVal, inline: true },
-            );
+            ).setFooter(`It's currently Team ${game.turn + 1}'s turn`);
 
         channel.send(teamEmbed);
     }
