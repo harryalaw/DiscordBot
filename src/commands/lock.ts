@@ -1,7 +1,9 @@
-const { prefix } = require('../../config.json');
-const Util = require('./../utility/Util');
+import { MessageReaction } from 'discord.js';
+import { prefix } from '../../config.json';
+import { Command } from '../utility/command';
+import { Util } from './../utility/util';
 
-module.exports = {
+const lock: Command = {
     name: 'lock',
     description: "Let's anyone on the active team lock in their answer and trigger the end of the round.",
     aliases: ["lockin", "confirm"],
@@ -13,10 +15,10 @@ module.exports = {
     execute(message, args, games) {
         const { channel } = message;
 
-        const game = games.get(channel.id);
+        const game = games.get(channel.id)!;
         game.started = false
 
-        let scoredPoints;
+        let scoredPoints: number;
 
         const delta = Math.abs(game.board.fanAngle - game.board.dialAngle);
         if (delta <= 3.5) scoredPoints = 4;
@@ -24,7 +26,7 @@ module.exports = {
         else if (delta <= 17.5) scoredPoints = 2;
         else scoredPoints = 0;
 
-        const reactions = [];
+        const reactions: Array<Promise<MessageReaction>> = [];
         channel.send(`The other team now gets to guess if they think the target is to the left or the right of the dial. If they guess the direction correctly they will get 1 point!\nDiscuss and once you've decided someone should react with ⬅️ or ➡️ to let me know`)
             .then(msg => {
                 reactions.push(msg.react("⬅️"));

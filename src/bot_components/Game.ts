@@ -1,10 +1,23 @@
-const { Collection, MessageEmbed } = require('discord.js');
-const Util = require('../utility/Util.js');
-const Board = require('./board.js');
-const { prompts } = require('../../assets/text_assets/prompts.json');
+import { GuildMember, Collection, MessageEmbed, Channel } from 'discord.js';
+import { Board } from './board';
+import { Util } from '../utility/util';
+import { prompts } from './../../assets/text_assets/prompts.json';
 
-class Game {
-    constructor(channel, member) {
+export class Game {
+    channel: Channel;
+    owner: GuildMember;
+    players: Collection<GuildMember, number>;
+    teams: [Set<string>, Set<string>];
+    started: boolean;
+    turn: number;
+    scoreCap: number;
+    scores: [number, number];
+    prompt: [string, string];
+    board: Board;
+    clueGiver: string | null;
+
+
+    constructor(channel: Channel, member: GuildMember) {
         this.channel = channel;
         this.owner = member;
         this.players = new Collection();
@@ -15,19 +28,18 @@ class Game {
         this.scores = [0, 0];
         this.prompt = ["", ""]
         this.board = new Board(this.prompt);
-        this.clueGiver;
+        this.clueGiver = null;
     }
 
-    // Add/remove Players (pass in the member value)
-    removePlayer(member) {
-        this.teams[this.players.get(member)].delete(member.id);
+    removePlayer(member: GuildMember) {
+        this.teams[this.players.get(member)!].delete(member.id);
         this.players.delete(member);
         // If game owner leaves, reassign to another player, if no players are in the game do nothing.
         if (this.owner.id === member.id && this.players.size >= 1) {
             this.owner = Array.from(this.players.keys())[0];
         }
     }
-    addPlayer(member, team = undefined) {
+    addPlayer(member: GuildMember, team: number) {
         this.players.set(member, team)
         this.setTeam(member, team);
         // If game owner no longer in the game assign the game owner to the next person to join
@@ -36,23 +48,23 @@ class Game {
         }
     }
 
-    setTeam(player, team = undefined) {
-        if (!this.players.has(player)) return;
+    setTeam(member: GuildMember, team: number = NaN) {
+        if (!this.players.has(member)) return;
         if (!isNaN(team)) team %= 2;
         if (team !== 0 && team !== 1) {
             team = this.teams[0].size <= this.teams[1].size ? 0 : 1;
         }
-        this.teams[team].add(player.id);
-        this.players.set(player, team);
-        this.teams[team ^ 1].delete(player.id);
+        this.teams[team].add(member.id);
+        this.players.set(member, team);
+        this.teams[team ^ 1].delete(member.id);
     }
 
-    setScoreCap(score) {
+    setScoreCap(score: number) {
         this.scoreCap = score;
     }
 
     displayScore() {
-        const scoreEmbed = new MessageEmbed()
+        const scoreEmbed: MessageEmbed = new MessageEmbed()
             .setColor(this.board.colors[0])
             .addFields(
                 { name: 'Team 1', value: this.scores[0], inline: true },
@@ -62,7 +74,7 @@ class Game {
     }
 
     shuffleTeams() {
-        const playerArray = Array.from(this.players.keys());
+        const playerArray: Array<GuildMember> = Array.from(this.players.keys());
         this.teams[0].clear();
         this.teams[1].clear();
         Util.shuffleArray(playerArray);
@@ -81,5 +93,3 @@ class Game {
         this.board.setPrompt(["", ""])
     }
 }
-
-module.exports = Game;

@@ -1,10 +1,10 @@
-const { MessageAttachment } = require('discord.js');
-const Jimp = require('jimp');
-const { words } = require('./../../assets/text_assets/prompts.json');
-const { colors } = require('./../../assets/text_assets/colors.json');
-const Coordinate = require('./../utility/coordinate');
-const Wordboard = require('./../bot_components/Wordboard');
-const Util = require('./../utility/Util');
+import { TextChannel, Message, MessageAttachment, DMChannel, NewsChannel } from 'discord.js';
+import Jimp from 'jimp';
+
+import { colors } from './../../assets/text_assets/colors.json';
+import { Coordinate } from '../utility/coordinate';
+import { Wordboard } from './../bot_components/Wordboard';
+import { Util } from '../utility/util';
 
 const ArtAssets = {
     "background_open": './assets/art_assets/650x400/background-open.png',
@@ -16,7 +16,11 @@ const ArtAssets = {
     "right_arrow": './assets/art_assets/650x400/right_arrow.png',
 }
 
-class Board {
+export class Board {
+    dialAngle: number;
+    fanAngle: number;
+    prompt: [string, string];
+    colors: Array<string>;
     #MAX_ANGLE = 80;
     #MIN_ANGLE = -80;
     // each segment of the fan has an angle of 7 degrees
@@ -25,44 +29,42 @@ class Board {
     // The following variables are the 2D coordinates that I use to stitch the image together
     // Our overlay wants the circle to placed with center (325,325)
     // The fan has diameter 551 -> so needs to be placed at 325-275.5
-    #SCALEFACTOR = 0.5
-    #CIRCLE_PLACEMENT = new Coordinate(325 - 275.5, 325 - 275.5);
-
+    #CIRCLE_PLACEMENT: Coordinate = { x: 325 - 275.5, y: 325 - 275.5 };
 
     #BOX_WIDTH = 170;
     #BOX_HEIGHT = 110;
-    #L_BOX_TL = new Coordinate(155, 290);
-    #L_BOX_BR = new Coordinate(325, 400);
-    #R_BOX_TL = new Coordinate(325, 290);
-    #R_BOX_BR = new Coordinate(495, 400);
+    #L_BOX_TL: Coordinate = { x: 155, y: 290 };
+    #L_BOX_BR: Coordinate = { x: 325, y: 400 };
+    #R_BOX_TL: Coordinate = { x: 325, y: 290 };
+    #R_BOX_BR: Coordinate = { x: 495, y: 400 };
 
-    #L_ARROW_TL = new Coordinate(198, 312);
-    #R_ARROW_TL = new Coordinate(388, 312)
+    #L_ARROW_TL: Coordinate = { x: 198, y: 312 };
+    #R_ARROW_TL: Coordinate = { x: 388, y: 312 }
 
     #TEXT_BOX_WIDTH = 120;
     #TEXT_BOX_HEIGHT = 70;
     // Coordinates of text box corners are relative to the wordbox;
-    #L_TEXT_TL = new Coordinate(7.5, 22.5);
-    #R_TEXT_TL = new Coordinate(170 + 42.5, 22.5);
+    #L_TEXT_TL: Coordinate = { x: 7.5, y: 22.5 };
+    #R_TEXT_TL: Coordinate = { x: 170 + 42.5, y: 22.5 };
     ////////////////////////////////////////////////////
 
-    constructor(prompt) {
+    constructor(prompt: [string, string]) {
         this.dialAngle = 0;
         this.fanAngle = 0;
         this.prompt = prompt;
         this.setFanAngle();
-        this.colors;
+        this.colors = ["", ""];
         this.setNewColors();
     }
 
 
-    moveDial(angle) {
+    moveDial(angle: number) {
         this.dialAngle -= angle;
         if (this.dialAngle > this.#MAX_ANGLE) this.dialAngle = this.#MAX_ANGLE;
         if (this.dialAngle < this.#MIN_ANGLE) this.dialAngle = this.#MIN_ANGLE;
     }
 
-    setPrompt(prompt) {
+    setPrompt(prompt: [string, string]) {
         this.prompt = prompt;
     }
 
@@ -77,8 +79,7 @@ class Board {
     }
 
 
-
-    async makeBoard(isSecret) {
+    async makeBoard(isSecret: boolean) {
         let out;
         if (isSecret) {
             out = await Jimp.read(ArtAssets.background_closed);
@@ -107,19 +108,17 @@ class Board {
         return out;
     }
 
-    async bufferImage(isSecret) {
+    async bufferImage(isSecret: boolean) {
         const image = await this.makeBoard(isSecret);
         const buffer = await image.getBufferAsync(Jimp.MIME_PNG);
         const attachment = new MessageAttachment(buffer, "board.png");
         return attachment;
     }
 
-    async sendAsMessage(isSecret, channel, message) {
+    async sendAsMessage(isSecret: boolean, channel: TextChannel | DMChannel | NewsChannel, message?: Message) {
         const attachment = await this.bufferImage(isSecret);
         if (!message) channel.send(attachment);
         else channel.send(message, { files: [attachment] });
         return attachment;
     }
 }
-
-module.exports = Board;

@@ -1,20 +1,20 @@
-const Game = require('../bot_components/Game.js');
-const { BOT_OWNER } = require('../../config.json');
-const { ReactionUserManager } = require('discord.js');
-const Util = require('./../utility/Util');
+import { MessageReaction } from "discord.js";
+import { Command } from "../utility/command";
+import { Util } from "../utility/util";
+import { BOT_OWNER } from "../../config.json";
 
-module.exports = {
+const endgame: Command = {
     name: 'endgame',
     description: 'Ends the game of wavelength in this channel.',
     needsGame: true,
     execute(message, args, games) {
-        const { channel, member } = message;
-        const game = games.get(channel.id);
+        const { channel, member } = message!;
+        const game = games.get(channel.id)!;
         // Only the game owner or the bot owner can end it
-        if (game.owner !== member && member.id !== BOT_OWNER) {
+        if (game.owner !== member && member!.id !== BOT_OWNER) {
             return channel.send(`Only the game owner, ${game.owner} can end the game.`)
         }
-        const reactions = [];
+        const reactions: Array<Promise<MessageReaction>> = [];
         channel.send(`Please confirm that you want to end the game`)
             .then((msg) => {
                 reactions.push(msg.react("✅"));
@@ -34,3 +34,5 @@ module.exports = {
             })
     }
 }
+
+export { endgame }

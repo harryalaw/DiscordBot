@@ -1,7 +1,9 @@
-const Util = require('../utility/Util.js');
-const { MessageEmbed } = require('discord.js');
+import { MessageEmbed } from "discord.js";
+import { Command } from "../utility/command";
+import { Util } from "../utility/util";
 
-module.exports = {
+
+const list: Command = {
     name: 'list',
     description: 'Lists current players in the game and which teams they are on.',
     aliases: ['teams', 'team'],
@@ -9,12 +11,12 @@ module.exports = {
     cooldown: 10,
     execute(message, args, games) {
         const { channel } = message;
-        const game = games.get(channel.id);
+        const game = games.get(channel.id)!;
         // Currently the next line does nothing since the creator is always in the game.
         if (game.players.size === 0) return message.channel.send(`No one is in the lobby at the moment!`)
 
-        const team1 = [];
-        const team2 = [];
+        const team1: Array<string> = [];
+        const team2: Array<string> = [];
         game.players.forEach((value, member) => {
             const name = Util.getName(member);
             if (game.players.get(member) === 0) team1.push(name);
@@ -22,8 +24,8 @@ module.exports = {
         })
 
         // Embed fields may not be empty so use a zero-width space instead (\u200b)
-        team1FieldVal = team1.length === 0 ? '\u200b' : team1.join('\n');
-        team2FieldVal = team2.length === 0 ? '\u200b' : team2.join('\n');
+        const team1FieldVal = team1.length === 0 ? '\u200b' : team1.join('\n');
+        const team2FieldVal = team2.length === 0 ? '\u200b' : team2.join('\n');
 
         const teamEmbed = new MessageEmbed()
             .setColor(game.board.colors[0])

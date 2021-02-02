@@ -1,9 +1,16 @@
-const { prefix } = require('../../config.json');
-const { MessageEmbed } = require('discord.js');
+import { prefix } from '../../config.json';
+import { EmbedFieldData, MessageEmbed } from 'discord.js';
+import { Command } from "../utility/command";
+
+type InputFields = Array<EmbedFieldData>
+
 
 const footer = `To see other rules messages use ${prefix}rules followed by the corresponding number`;
 
-const moreDetailsFields = [
+
+
+
+const moreDetailsFields: InputFields = [
     // Add a blank buffer to ensure it doesn't align with previous text
     {
         "name": "\u200b",
@@ -24,7 +31,7 @@ const moreDetailsFields = [
 
 const embedColor = '#1987DA'
 
-const ruleSummary = [
+const ruleSummary: InputFields = [
     {
         "name": "Rules summary",
         "value": "Wavelength is a game where two teams compete to read each other's minds!\n\nTeams take turns rotating a dial to where they think a hidden target is. One player - the Psychic - knows where the target is but can only give a clue that belongs to a specific topic. The topics are spectrums with two opposing concepts on either end - like 'Hot-Cold' or 'Dangerous-Safe'.",
@@ -41,7 +48,7 @@ const ruleSummary = [
     }
 ];
 
-const psychicPhase = [
+const psychicPhase: InputFields = [
     {
         "name": "1️⃣ - Psychic Phase",
         "value": `Each round the active team will choose a team member to be the psychic for this round. Once you've picked your psychic they should type \`${prefix}start\` to be sent some instructions on how to start a round. Make sure that your psychic has DMs allowed on this server or I won't be able to communicate with them! The psychic will be shown where the target is located and given the choice between a few spectrums that they want to give a clue on.`
@@ -62,28 +69,28 @@ const psychicPhase = [
     }
 ];
 
-const teamPhase = [
+const teamPhase: InputFields = [
     {
         "name": "2️⃣ - Team Phase",
         "value": `Once the psychic has shared their clue with the rest of the players their team will be able to move the dial by typing \`${prefix}move degrees\`. Here degrees is the number of degrees you want to move the dial by -- a positive value moves the dial clockwise, a negative value moves the dial anticlockwise.\nOnce the guessing team has moved the dial to where they think the target is, one of the team members should type \`${prefix}lock\` to lock in your answer and move to the next phase of the round.`
     }
 ];
 
-const leftRightPhase = [
+const leftRightPhase: InputFields = [
     {
         "name": "3️⃣ - Left/Right Phase",
         "value": `The other team now gets to have a guess if they think that the center of the target is to the left or the right of where the dial is. This team should discuss and once they come to a conclusion they'll be able to vote on which direction. If they guess the direction correctly they will score one point.`
     }
 ];
 
-const scoringPhase = [
+const scoringPhase: InputFields = [
     {
         "name": "4️⃣ - Scoring Phase",
         "value": `After the other team has guessed which direction they think then the target will be revealed to everyone. The guessing team will score points based on which section of the target the dial is on and the other team scores based on whether they guessed left/right correctly. If the guessing team got a perfect guess by scoring 4 points then the other team cannot score 1 point for guessing the direction even if they are correct.`
     }
 ];
 
-const continuePhase = [
+const continuePhase: InputFields = [
     {
         "name": "5️⃣ - How Play Continues",
         "value": "The game continues like this with each team taking turns until one team reaches 10 points. Then they are the winner! If both teams reach/exceed 10 points in one turn then both teams get one more turn being the psychic each and whoever scores more points in these two rounds wins!"
@@ -100,7 +107,7 @@ const continuePhase = [
 
 const phases = [psychicPhase, teamPhase, leftRightPhase, scoringPhase, continuePhase]
 
-module.exports = {
+const rules: Command = {
     name: 'rules',
     description: 'Explains the rules of Wavelength',
     aliases: ['rule'],
@@ -113,13 +120,14 @@ module.exports = {
             .setColor(embedColor)
             .setFooter(footer)
         if (args.length >= 1) {
-            if (isNaN(args[0])) return channel.send("You need to provide a number as the first input");
-            if (1 <= parseInt(args[0]) && parseInt(args[0]) <= 5) {
+            let index = parseInt(args[0]);
+            if (isNaN(index)) return channel.send("You need to provide a number as the first input");
+            if (1 <= index && index <= 5) {
                 embed.addFields(
-                    ...phases[parseInt(args[0]) - 1]
+                    ...phases[index - 1]
                 )
             }
-            else if (args[0] === "6") {
+            else if (index === 6) {
                 phases.forEach(phase => {
                     embed.addFields(...phase)
                 })

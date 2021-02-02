@@ -1,6 +1,7 @@
-const { prefix } = require('../../config.json');
+import { prefix } from '../../config.json';
+import { Command } from '../utility/command';
 
-module.exports = {
+const move: Command = {
     name: 'move',
     description: 'Move the dial by the specified number of degrees.',
     aliases: ['nudge'],
@@ -14,13 +15,13 @@ module.exports = {
     execute(message, args, games) {
         const { channel } = message;
 
-        const game = games.get(channel.id);
-
-        if (isNaN(args[0])) {
+        const game = games.get(channel.id)!;
+        let degree = parseInt(args[0]);
+        if (isNaN(degree)) {
             return message.reply(`Type your messages like \`${prefix}move 10\` or \`${prefix}move -5\``);
         }
 
-        game.board.moveDial(args[0]);
+        game.board.moveDial(degree);
         game.board.sendAsMessage(true, channel);
     }
 }

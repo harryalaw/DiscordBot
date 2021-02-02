@@ -1,18 +1,18 @@
-const { prefix } = require('../../config.json');
-const { MessageEmbed } = require('discord.js');
+import { Command } from "../utility/command";
+import { prefix } from "../../config.json";
+import { MessageEmbed } from "discord.js";
 
-module.exports = {
+const help: Command = {
     name: 'help',
     description: 'List all of my commands or get info about a specific command.',
     aliases: ['commands'],
     usage: ['', '[command name]'],
     cooldown: 1,
-    execute(message, args) {
+    execute(message, args, games, commands) {
         const helperEmbed = new MessageEmbed();
         helperEmbed.setColor("#C8A2C8");
         helperEmbed.setFooter(`To find out about how to use a command you can use ${prefix}help [command]`);
         const data = [];
-        const { commands } = message.client;
         if (!args.length) {
             helperEmbed.addField("List of my commands", commands.map(command => command.name).join('\n'), false)
 
@@ -27,7 +27,7 @@ module.exports = {
                 });
         }
         const name = args[0].toLowerCase();
-        const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
+        const command = commands.get(name) || commands.find(c => c.aliases !== undefined && c.aliases.includes(name));
 
         if (!command) {
             return message.reply(`That's not a valid command!`);
@@ -52,3 +52,5 @@ module.exports = {
         message.channel.send(helperEmbed);
     }
 }
+
+export { help };

@@ -2,7 +2,7 @@
   "name": "wavelengthbot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,5 +12,8 @@
     "canvas": "^2.6.1",
     "discord.js": "^12.5.1",
     "jimp": "^0.16.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.22"
   }
 }

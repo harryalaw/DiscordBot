@@ -1,7 +1,8 @@
-const Util = require('../utility/Util.js');
-const { prefix } = require('./../../config.json');
+import { Command } from "../utility/command";
+import { Util } from "../utility/util";
+import { prefix } from "../../config.json";
 
-module.exports = {
+const join: Command = {
     name: 'join',
     description: "Join a game of wavelength.",
     usage: ['', '[team number]'],
@@ -10,13 +11,13 @@ module.exports = {
     cooldown: 5,
     execute(message, args, games) {
         const { channel, member } = message;
-        let game = games.get(channel.id);
-        if (game.players.has(member)) return;
+        let game = games.get(channel.id)!;
+        if (game.players.has(member!)) return;
         // Check that a user has DMs allowed and send helpful message.
         message.author.send(`If you need any help with the rules of the game or how to use me type \`${prefix}help\` or \`${prefix}rules\`.`)
             .then(() => {
-                game.addPlayer(member, args[0]);
-                return channel.send(`Added ${Util.getName(member)} to Team ${game.players.get(member) + 1}`);
+                game.addPlayer(member!, parseInt(args[0]));
+                return channel.send(`Added ${Util.getName(member!)} to Team ${game.players.get(member!)! + 1}`);
             })
             .catch(error => {
                 console.error(`Could not send join DM to ${message.author.tag}.`);
@@ -25,3 +26,5 @@ module.exports = {
 
     }
 }
+
+export { join };

@@ -1,9 +1,12 @@
-const Discord = require('discord.js');
-const Util = require('../utility/Util.js');
-const { prompts } = require('../../assets/text_assets/prompts.json');
-const { prefix } = require('../../config.json');
+//  Discord = require('discord.js');
+// const Util = require('../utility/Util.js');
+import { Util } from '../utility/util';
+import { prompts } from '../../assets/text_assets/prompts.json';
+import { prefix } from '../../config.json';
+import { Command } from '../utility/command';
+import { MessageReaction } from 'discord.js';
 
-module.exports = {
+const start: Command = {
     name: 'start',
     aliases: ['send'],
     description: `Starts the next round of wavelength, I'll send a DM to whoever uses it explaining what to do next.`,
@@ -13,7 +16,7 @@ module.exports = {
     cooldown: 5,
     execute(message, args, games) {
         const { channel, author, member } = message;
-        const game = games.get(channel.id);
+        const game = games.get(channel.id)!;
         if (game.started) return;
 
         const choices = Util.sample(prompts, 3)
@@ -32,9 +35,9 @@ module.exports = {
         \nThink of a clue that matches one of the possible spectrums above and once you've decided pick the spectrum by reacting with the corresponding emoji and give your clue to your team!`;
 
 
-        message.channel.send(`I'm sending ${Util.getName(member)} the instructions to start the next round.`)
+        message.channel.send(`I'm sending ${Util.getName(member!)} the instructions to start the next round.`)
 
-        const reactions = [];
+        const reactions: Array<Promise<MessageReaction>> = [];
         author.send(preamble).then((msg) => {
             game.board.bufferImage(false).then(img => author.send(img)).then(() => {
                 author.send(text).then((msg) => {
@@ -60,3 +63,5 @@ module.exports = {
         });
     }
 }
+
+export { start };
