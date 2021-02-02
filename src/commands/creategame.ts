@@ -23,4 +23,4 @@ const createGame: Command = {
     }
 }
 
-export { createGame };
+export { createGame as default };

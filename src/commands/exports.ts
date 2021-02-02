@@ -1,0 +1,13 @@
+export { default as changeteam_command } from './changeteam';
+export { default as creategame_command } from './creategame';
+export { default as endgame_command } from './endgame';
+export { default as help_command } from './help';
+export { default as join_command } from './join';
+export { default as leave_command } from './leave';
+export { default as list_command } from './list';
+export { default as lock_command } from './lock';
+export { default as move_command } from './move';
+export { default as reload_command } from './reload';
+export { default as rules_command } from './rules';
+export { default as score_command } from './score';
+export { default as start_command } from './start';

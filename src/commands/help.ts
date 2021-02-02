@@ -53,4 +53,4 @@ const help: Command = {
     }
 }
 
-export { help };
+export { help as default };

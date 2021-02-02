@@ -37,3 +37,5 @@ const list: Command = {
         channel.send(teamEmbed);
     }
 }
+
+export { list as default };

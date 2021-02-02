@@ -150,3 +150,4 @@ const rules: Command = {
     }
 }
 
+export { rules as default };

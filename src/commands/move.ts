@@ -25,3 +25,5 @@ const move: Command = {
         game.board.sendAsMessage(true, channel);
     }
 }
+
+export { move as default };

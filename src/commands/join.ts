@@ -27,4 +27,4 @@ const join: Command = {
     }
 }
 
-export { join };
+export { join as default };

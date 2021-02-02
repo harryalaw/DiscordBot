@@ -64,4 +64,4 @@ const start: Command = {
     }
 }
 
-export { start };
+export { start as default };

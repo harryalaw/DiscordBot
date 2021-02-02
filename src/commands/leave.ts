@@ -13,4 +13,4 @@ const leave: Command = {
         game.removePlayer(member!);
     }
 }
-export { leave }
+export { leave as default }

@@ -47,3 +47,5 @@ const score: Command = {
         }
     }
 }
+
+export { score as default };

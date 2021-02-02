@@ -22,3 +22,5 @@ const reload: Command = {
         }
     }
 }
+
+export { reload as default };

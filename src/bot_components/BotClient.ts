@@ -3,6 +3,11 @@ import { readdirSync } from "fs";
 import { Game } from "./Game";
 import { Command } from '../utility/command';
 
+import * as commands from './../commands/exports';
+// import * as LIST from './../commands/index';
+// import { commandsCollection } from './../commands/index';
+
+
 import { prefix, token } from '../../config.json';
 
 export class BotClient {
@@ -20,14 +25,8 @@ export class BotClient {
         this.cooldowns = new Collection();
     }
 
-    async initCommands() {
-        const commandFiles = readdirSync('./dist/src/commands');
-        console.log(commandFiles);
-        // Doesn't work at the moment, can't import the module
-        for (const file of commandFiles) {
-            const command: Command = await import(`./dist/src/commands/${file}`);
-            this.commands.set(command.name, command);
-        }
+    initCommands() {
+        Object.values(commands).forEach((command) => this.commands.set(command.name, command));
     }
 
     validateCommand(command: Command, channel: TextChannel | DMChannel | NewsChannel, member: GuildMember): string {
@@ -35,7 +34,6 @@ export class BotClient {
         if (command.needsGame && !this.games.has(channel.id)) {
             return `There's no game in this channel!`;
         }
-
         // game is now always valid since the command.needsX
         // contain the needsGame condition;
         const game = this.games.get(channel.id)!;
@@ -60,17 +58,20 @@ export class BotClient {
             console.log("Bot is online");
         })
         this.client.on('message', message => {
-            console.log(this.commands);
             const { content, channel, member } = message;
+            //@TODO Remove this member == null check and fix the typing so that it works
+            //member _IS_ null if it is a message sent to the bot in a DM;
+            //So for example the help function is okay to be dm'd/rules but others are not;
+            //Need to distinguish those commands from others probably.
             if (member == null) return;
             if (!content.startsWith(prefix) || message.author.bot) return;
 
             const args = content.slice(prefix.length).trim().split(/ +/);
             const commandName = args.shift()!.toLowerCase();
 
-            const command = this.commands.get(commandName);
+            const command = this.commands.get(commandName) || this.commands.find(cmd => (cmd.aliases != undefined) && cmd.aliases.includes(commandName));
             if (!command) return;
-
+            console.log(commandName);
             const invalidCommandMessage = this.validateCommand(command, channel, member);
             if (invalidCommandMessage !== '') {
                 return message.reply(invalidCommandMessage);

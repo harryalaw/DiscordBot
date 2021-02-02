@@ -62,3 +62,5 @@ const lock: Command = {
             })
     }
 }
+
+export { lock as default };

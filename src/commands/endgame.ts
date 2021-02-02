@@ -35,4 +35,4 @@ const endgame: Command = {
     }
 }
 
-export { endgame }
+export { endgame as default }
