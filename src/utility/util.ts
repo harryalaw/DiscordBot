@@ -37,8 +37,8 @@ class Util {
         }
     }
 
-    static reactionFilterOneTeam(reactions: Array<string>, game: Game, activeTeam: boolean) {
-        const adjust = activeTeam === true ? 0 : 1;
+    static reactionFilterOneTeam(reactions: Array<string>, game: Game, responseFromActiveTeam: boolean) {
+        const adjust = responseFromActiveTeam === true ? 0 : 1;
         return function (reaction: MessageReaction, user: User) {
             return reactions.includes(reaction.emoji.name) && game.teams[game.turn ^ adjust].has(user.id);
         }

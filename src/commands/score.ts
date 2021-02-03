@@ -17,7 +17,7 @@ const score: Command = {
 
     cooldown: 5,
     execute(message, args, games) {
-        const { channel } = message;
+        const { channel, member } = message;
         const game = games.get(channel.id)!;
 
         if (args[0] === 'set') {
@@ -36,7 +36,8 @@ const score: Command = {
                     reactions.push(msg.react("✅"));
                     reactions.push(msg.react("❌"));
                     Promise.all(reactions).then(() => {
-                        msg.awaitReactions(Util.reactionFilterOneTeam(["✅", "❌"], game, false), { max: 1 })
+                        const userOnActiveTeam = game.players.get(member!) === game.turn;
+                        msg.awaitReactions(Util.reactionFilterOneTeam(["✅", "❌"], game, !userOnActiveTeam), { max: 1 })
                             .then(collected => {
                                 if (collected.has("✅")) {
                                     game.scores[0] = parseInt(args[1]);
