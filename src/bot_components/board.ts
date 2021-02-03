@@ -7,13 +7,13 @@ import { Wordboard } from './../bot_components/Wordboard';
 import { Util } from '../utility/util';
 
 const ArtAssets = {
-    "background_open": './assets/art_assets/650x400/background-open.png',
-    "background_closed": './assets/art_assets/650x400/background-closed.png',
-    "dial": './assets/art_assets/650x400/dial.png',
-    "fan": './assets/art_assets/650x400/fan.png',
-    "overlay": './assets/art_assets/650x400/overlay.png',
-    "left_arrow": './assets/art_assets/650x400/left_arrow.png',
-    "right_arrow": './assets/art_assets/650x400/right_arrow.png',
+    "background_open": './assets/art_assets/background-open.png',
+    "background_closed": './assets/art_assets/background-closed.png',
+    "dial": './assets/art_assets/dial.png',
+    "fan": './assets/art_assets/fan.png',
+    "overlay": './assets/art_assets/overlay.png',
+    "left_arrow": './assets/art_assets/left_arrow.png',
+    "right_arrow": './assets/art_assets/right_arrow.png',
 }
 
 export class Board {
