@@ -29,8 +29,16 @@ export class BotClient {
         Object.values(commands).forEach((command) => this.commands.set(command.name, command));
     }
 
-    validateCommand(command: Command, channel: TextChannel | DMChannel | NewsChannel, member: GuildMember): string {
-
+    validateCommand(command: Command, channel: TextChannel | DMChannel | NewsChannel, member: GuildMember | null): string {
+        // Messy list of if/elses
+        if (member == null) {
+            if (command.needsChannel) {
+                return `Need to be in a channel in a server to use this command!`;
+            }
+            else {
+                return '';
+            }
+        }
         if (command.needsGame && !this.games.has(channel.id)) {
             return `There's no game in this channel!`;
         }
@@ -59,11 +67,7 @@ export class BotClient {
         })
         this.client.on('message', message => {
             const { content, channel, member } = message;
-            //@TODO Remove this member == null check and fix the typing so that it works
-            //member _IS_ null if it is a message sent to the bot in a DM;
-            //So for example the help function is okay to be dm'd/rules but others are not;
-            //Need to distinguish those commands from others probably.
-            if (member == null) return;
+
             if (!content.startsWith(prefix) || message.author.bot) return;
 
             const args = content.slice(prefix.length).trim().split(/ +/);
@@ -71,8 +75,8 @@ export class BotClient {
 
             const command = this.commands.get(commandName) || this.commands.find(cmd => (cmd.aliases != undefined) && cmd.aliases.includes(commandName));
             if (!command) return;
-            console.log(commandName);
             const invalidCommandMessage = this.validateCommand(command, channel, member);
+
             if (invalidCommandMessage !== '') {
                 return message.reply(invalidCommandMessage);
             }

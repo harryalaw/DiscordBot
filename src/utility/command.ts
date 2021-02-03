@@ -8,10 +8,12 @@ interface Command {
     aliases?: Array<string>;
     usage?: Array<string>;
     argExplanation?: string;
-    needsGame?: boolean;
-    needsPlayer?: boolean;
-    needsRound?: boolean;
-    needsActiveTeam?: boolean;
+
+    needsChannel: boolean;
+    needsGame: boolean;
+    needsPlayer: boolean;
+    needsRound: boolean;
+    needsActiveTeam: boolean;
 
     execute(message: Message, args: string[], games: Collection<string, Game>, commands: Collection<string, Command>): any;
 }

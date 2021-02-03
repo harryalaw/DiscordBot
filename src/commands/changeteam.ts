@@ -6,14 +6,15 @@ let changeteam: Command = {
     description: 'Change which team you are on or randomise all the teams.',
     usage: ['', '[team number]', 'shuffle'],
     argExplanation: `If no team is specified you will join the smaller team. Otherwise you join the team you chose. If the shuffle mode is used then both teams are randomised.`,
+    needsChannel: true,
     needsGame: true,
     needsPlayer: true,
+    needsRound: false,
+    needsActiveTeam: false,
     cooldown: 5,
     execute(message, args, games) {
         const { channel, member } = message;
         const game = games.get(channel.id)!;
-
-        // Null member if they are no longer a valid member of the server after sending
         if (member == null) return;
 
         if (args[0] == 'shuffle') {

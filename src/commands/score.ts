@@ -8,7 +8,13 @@ const score: Command = {
     description: `Lists the scores of the two teams. If the \`set\` option is included then can be used to set the scores`,
     usage: ['', 'set [team1 score] [team2 score]'],
     argExplanation: `Including the optional \`set\` lets you specify the score you want to set it to`,
+
+    needsChannel: true,
     needsGame: true,
+    needsRound: false,
+    needsPlayer: false,
+    needsActiveTeam: false,
+
     cooldown: 5,
     execute(message, args, games) {
         const { channel } = message;

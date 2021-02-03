@@ -6,7 +6,11 @@ import { BOT_OWNER } from "../../config.json";
 const endgame: Command = {
     name: 'endgame',
     description: 'Ends the game of wavelength in this channel.',
+    needsChannel: true,
     needsGame: true,
+    needsPlayer: false,
+    needsRound: false,
+    needsActiveTeam: false,
     execute(message, args, games) {
         const { channel, member } = message!;
         const game = games.get(channel.id)!;

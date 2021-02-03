@@ -7,9 +7,6 @@ type InputFields = Array<EmbedFieldData>
 
 const footer = `To see other rules messages use ${prefix}rules followed by the corresponding number`;
 
-
-
-
 const moreDetailsFields: InputFields = [
     // Add a blank buffer to ensure it doesn't align with previous text
     {
@@ -114,6 +111,11 @@ const rules: Command = {
     usage: ['', '[ruleNumber]'],
     argExplanation: `Using \`${prefix}rules\` on its own shows a summary, but adding a rule number shows you the relevant rules for the section of the game.`,
     cooldown: 5,
+    needsChannel: false,
+    needsGame: false,
+    needsRound: false,
+    needsPlayer: false,
+    needsActiveTeam: false,
     execute(message, args, games) {
         const { channel } = message;
         let embed = new MessageEmbed()

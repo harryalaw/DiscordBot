@@ -8,6 +8,11 @@ const help: Command = {
     aliases: ['commands'],
     usage: ['', '[command name]'],
     cooldown: 1,
+    needsChannel: false,
+    needsGame: false,
+    needsPlayer: false,
+    needsRound: false,
+    needsActiveTeam: false,
     execute(message, args, games, commands) {
         const helperEmbed = new MessageEmbed();
         helperEmbed.setColor("#C8A2C8");

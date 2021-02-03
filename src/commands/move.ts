@@ -7,6 +7,7 @@ const move: Command = {
     aliases: ['nudge'],
     usage: ['[degrees]'],
     argExplanation: 'Use a positive value for degrees to move the dial clockwise, and a negative value to move the dial counterclockwise.',
+    needsChannel: true,
     needsGame: true,
     needsPlayer: true,
     needsRound: true,

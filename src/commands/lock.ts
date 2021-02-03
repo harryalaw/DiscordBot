@@ -7,6 +7,7 @@ const lock: Command = {
     name: 'lock',
     description: "Let's anyone on the active team lock in their answer and trigger the end of the round.",
     aliases: ["lockin", "confirm"],
+    needsChannel: true,
     needsGame: true,
     needsPlayer: true,
     needsRound: true,

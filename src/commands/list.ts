@@ -7,7 +7,11 @@ const list: Command = {
     name: 'list',
     description: 'Lists current players in the game and which teams they are on.',
     aliases: ['teams', 'team'],
+    needsChannel: true,
     needsGame: true,
+    needsRound: false,
+    needsPlayer: false,
+    needsActiveTeam: false,
     cooldown: 10,
     execute(message, args, games) {
         const { channel } = message;

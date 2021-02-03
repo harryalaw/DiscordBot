@@ -8,6 +8,11 @@ const createGame: Command = {
     description: 'Create a new game of wavelength in this channel.',
     aliases: ['create', 'c'],
     cooldown: 30,
+    needsChannel: true,
+    needsGame: false,
+    needsPlayer: false,
+    needsRound: false,
+    needsActiveTeam: false,
     execute(message, args, games, commands) {
         const { channel, member } = message;
         if (member === null) return;

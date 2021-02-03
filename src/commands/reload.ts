@@ -4,6 +4,11 @@ const reload: Command = {
     name: 'reload',
     description: 'Reloads a command, used for debugging purposes.',
     aliases: ['r'],
+    needsChannel: false,
+    needsGame: false,
+    needsRound: false,
+    needsPlayer: false,
+    needsActiveTeam: false,
     execute(message, args, games, commands) {
         if (!args.length) return message.channel.send(`You didn't pass any command to reload, ${message.author}!`);
         const commandName = args[0].toLowerCase();
