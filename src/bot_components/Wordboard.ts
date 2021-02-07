@@ -4,14 +4,14 @@ import { Coordinate } from "../utility/coordinate";
 
 export class Wordboard {
     colors: string[];
-    prompts: [string, string];
+    prompts: string[];
     textBoxWidth: number;
     textBoxHeight: number;
     textBoxTLCoords: [Coordinate, Coordinate];
     canvas: Canvas;
     context: CanvasRenderingContext2D;
 
-    constructor(colors: string[], prompt: [string, string], width: number, height: number,
+    constructor(colors: string[], prompt: string[], width: number, height: number,
         textBoxWidth: number, textBoxHeight: number, L_TEXT_TL: Coordinate, R_TEXT_TL: Coordinate) {
 
         // colors will be of the shape [string,string] but couldn't figure out how to type Util.sample to allow that

@@ -2,17 +2,17 @@ import { GuildMember, MessageReaction, User } from "discord.js";
 import { Game } from "../bot_components/Game";
 
 class Util {
-    static pickRandom(array: Array<any>) {
+    static pickRandom<T>(array: Array<T>) {
         return array[Math.floor(Math.random() * array.length)];
     }
 
     // Samples n items from an array
-    static sample(array: Array<any>, n: number) {
+    static sample<T>(array: Array<T>, n: number) {
         this.shuffleArray(array);
         return array.slice(0, n);
     }
 
-    static shuffleArray(array: Array<any>) {
+    static shuffleArray<T>(array: Array<T>) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];

@@ -4,8 +4,6 @@ import { Game } from "./Game";
 import { Command } from '../utility/command';
 
 import * as commands from './../commands/exports';
-// import * as LIST from './../commands/index';
-// import { commandsCollection } from './../commands/index';
 
 
 import { prefix, token } from '../../config.json';

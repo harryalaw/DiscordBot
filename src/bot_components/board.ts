@@ -19,7 +19,7 @@ const ArtAssets = {
 export class Board {
     dialAngle: number;
     fanAngle: number;
-    prompt: [string, string];
+    prompt: Array<string>;
     colors: Array<string>;
     #MAX_ANGLE = 80;
     #MIN_ANGLE = -80;
@@ -64,7 +64,7 @@ export class Board {
         if (this.dialAngle < this.#MIN_ANGLE) this.dialAngle = this.#MIN_ANGLE;
     }
 
-    setPrompt(prompt: [string, string]) {
+    setPrompt(prompt: string[]) {
         this.prompt = prompt;
     }
 
