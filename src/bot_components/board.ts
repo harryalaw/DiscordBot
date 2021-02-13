@@ -48,7 +48,7 @@ export class Board {
     #R_TEXT_TL: Coordinate = { x: 170 + 42.5, y: 22.5 };
     ////////////////////////////////////////////////////
 
-    constructor(prompt: [string, string]) {
+    constructor(prompt: string[]) {
         this.dialAngle = 0;
         this.fanAngle = 0;
         this.prompt = prompt;

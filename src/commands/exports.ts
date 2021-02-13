@@ -7,7 +7,6 @@ export { default as leave_command } from './leave';
 export { default as list_command } from './list';
 export { default as lock_command } from './lock';
 export { default as move_command } from './move';
-export { default as reload_command } from './reload';
 export { default as rules_command } from './rules';
 export { default as score_command } from './score';
 export { default as start_command } from './start';

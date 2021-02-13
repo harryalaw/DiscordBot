@@ -12,7 +12,7 @@ export class Game {
     turn: number;
     scoreCap: number;
     scores: [number, number];
-    prompt: [string, string];
+    prompt: string[];
     board: Board;
     clueGiver: string | null;
 

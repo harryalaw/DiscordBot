@@ -1,5 +1,3 @@
-//  Discord = require('discord.js');
-// const Util = require('../utility/Util.js');
 import { Util } from '../utility/util';
 import { prompts } from '../../assets/text_assets/prompts.json';
 import { prefix } from '../../config.json';
