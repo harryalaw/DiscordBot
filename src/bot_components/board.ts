@@ -1,9 +1,9 @@
 import { TextChannel, Message, MessageAttachment, DMChannel, NewsChannel } from 'discord.js';
 import Jimp from 'jimp';
 
-import { colors } from './../../assets/text_assets/colors.json';
+import { colors } from '../../assets/text_assets/colors.json';
 import { Coordinate } from '../utility/coordinate';
-import { Wordboard } from './../bot_components/Wordboard';
+import { Wordboard } from './Wordboard';
 import { Util } from '../utility/util';
 
 const ArtAssets = {
@@ -34,9 +34,9 @@ export class Board {
     #BOX_WIDTH = 170;
     #BOX_HEIGHT = 110;
     #L_BOX_TL: Coordinate = { x: 155, y: 290 };
-    #L_BOX_BR: Coordinate = { x: 325, y: 400 };
-    #R_BOX_TL: Coordinate = { x: 325, y: 290 };
-    #R_BOX_BR: Coordinate = { x: 495, y: 400 };
+    // #L_BOX_BR: Coordinate = { x: 325, y: 400 };
+    // #R_BOX_TL: Coordinate = { x: 325, y: 290 };
+    // #R_BOX_BR: Coordinate = { x: 495, y: 400 };
 
     #L_ARROW_TL: Coordinate = { x: 198, y: 312 };
     #R_ARROW_TL: Coordinate = { x: 388, y: 312 }
@@ -57,12 +57,7 @@ export class Board {
         this.setNewColors();
     }
 
-
-    moveDial(angle: number) {
-        this.dialAngle -= angle;
-        if (this.dialAngle > this.#MAX_ANGLE) this.dialAngle = this.#MAX_ANGLE;
-        if (this.dialAngle < this.#MIN_ANGLE) this.dialAngle = this.#MIN_ANGLE;
-    }
+    ///// Setters
 
     setPrompt(prompt: string[]) {
         this.prompt = prompt;
@@ -72,12 +67,23 @@ export class Board {
         const angle = (2 * this.#MAX_ANGLE - this.#FAN_RANGE) * Math.random()
             - (this.#MAX_ANGLE - this.#FAN_RANGE / 2);
         this.fanAngle = angle;
+        // Move dial also to where the fan is
+        this.dialAngle = angle;
     }
 
     setNewColors() {
         this.colors = Util.sample(colors, 2);
     }
 
+
+    ////////// 
+    moveDial(angle: number) {
+        this.dialAngle -= angle;
+        if (this.dialAngle > this.#MAX_ANGLE) this.dialAngle = this.#MAX_ANGLE;
+        if (this.dialAngle < this.#MIN_ANGLE) this.dialAngle = this.#MIN_ANGLE;
+    }
+
+    //////// Board creation and sending
 
     async makeBoard(isSecret: boolean) {
         let out;

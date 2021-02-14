@@ -48,6 +48,7 @@ export class Wordboard {
             });
         })
     }
+
     resizeText(text: string[][]) {
         // If one line in the parsed prompts is too long scales down the text 
         //until it all fits in the text box
