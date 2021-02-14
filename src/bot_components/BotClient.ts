@@ -1,5 +1,4 @@
 import { Client, Collection, DMChannel, GuildMember, NewsChannel, TextChannel } from "discord.js";
-import { readdirSync } from "fs";
 import { Game } from "./Game";
 import { Command } from '../utility/command';
 
@@ -7,6 +6,7 @@ import * as commands from './../commands/exports';
 
 
 import { prefix, token } from '../../config.json';
+
 
 export class BotClient {
     client: Client;
@@ -38,7 +38,7 @@ export class BotClient {
             }
         }
         if (command.needsGame && !this.games.has(channel.id)) {
-            return `There's no game in this channel!`;
+            return `There's no game in this channel, make one with \`${prefix}create\``;
         }
         // game is now always valid since the command.needsX
         // contain the needsGame condition;
