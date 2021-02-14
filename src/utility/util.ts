@@ -1,4 +1,4 @@
-import { GuildMember, MessageReaction, User } from "discord.js";
+import { EmojiResolvable, GuildMember, Message, MessageReaction, User } from "discord.js";
 import { Game } from "../bot_components/Game";
 
 class Util {
@@ -46,3 +46,11 @@ class Util {
 }
 
 export { Util }
+
+export const addReactionsToMessage = (emojis: EmojiResolvable[], msg: Message) => {
+    const reactions = [];
+    for (const emoji of emojis) {
+        reactions.push(msg.react(emoji));
+    }
+    return Promise.all(reactions);
+}

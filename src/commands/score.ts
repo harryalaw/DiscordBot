@@ -1,6 +1,5 @@
-import { MessageReaction } from 'discord.js';
 import { Command } from '../utility/command';
-import { Util } from './../utility/util';
+import { addReactionsToMessage, Util } from './../utility/util';
 
 const score: Command = {
     name: 'score',
@@ -16,7 +15,7 @@ const score: Command = {
     needsActiveTeam: false,
 
     cooldown: 5,
-    execute(message, args, games) {
+    execute: async (message, args, games) => {
         const { channel, member } = message;
         const game = games.get(channel.id)!;
 
@@ -29,25 +28,17 @@ const score: Command = {
             }
 
 
-            const reactions: Array<Promise<MessageReaction>> = [];
             // Get confirmation from other team
-            message.channel.send(`Do both teams agree on the score being set to ${args[1]}-${args[2]}?`)
-                .then((msg) => {
-                    reactions.push(msg.react("✅"));
-                    reactions.push(msg.react("❌"));
-                    Promise.all(reactions).then(() => {
-                        const userOnActiveTeam = game.players.get(member!) === game.turn;
-                        msg.awaitReactions(Util.reactionFilterOneTeam(["✅", "❌"], game, !userOnActiveTeam), { max: 1 })
-                            .then(collected => {
-                                if (collected.has("✅")) {
-                                    game.scores[0] = parseInt(args[1]);
-                                    game.scores[1] = parseInt(args[2]);
-                                    return channel.send(game.displayScore());
-                                }
-                                else return channel.send(`The other team didn't agree to changing the score`);
-                            })
-                    })
-                });
+            const msg = await message.channel.send(`Do both teams agree on the score being set to ${args[1]}-${args[2]}?`);
+            await addReactionsToMessage(["✅", "❌"], msg)
+            const userOnActiveTeam = game.players.get(member!) === game.turn;
+            const collected = await msg.awaitReactions(Util.reactionFilterOneTeam(["✅", "❌"], game, !userOnActiveTeam), { max: 1 });
+            if (collected.has("✅")) {
+                game.scores[0] = parseInt(args[1]);
+                game.scores[1] = parseInt(args[2]);
+                return channel.send(game.displayScore());
+            }
+            else return channel.send(`The other team didn't agree to changing the score`);
         }
         else {
             return channel.send(game.displayScore());

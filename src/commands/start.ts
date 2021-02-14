@@ -1,8 +1,7 @@
-import { Util } from '../utility/util';
+import { addReactionsToMessage, Util } from '../utility/util';
 import { prompts } from '../../assets/text_assets/prompts.json';
-import { prefix } from '../../config.json';
 import { Command } from '../utility/command';
-import { MessageReaction } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 
 const start: Command = {
     name: 'start',
@@ -14,7 +13,7 @@ const start: Command = {
     needsPlayer: true,
     needsActiveTeam: true,
     cooldown: 5,
-    execute(message, args, games) {
+    execute: async (message, args, games) => {
         const { channel, author, member } = message;
         const game = games.get(channel.id)!;
         if (game.started) return;
@@ -22,45 +21,33 @@ const start: Command = {
         const choices = Util.sample(prompts, 3)
         game.clueGiver = author.id;
         game.started = true;
-        game.resetPrompt();
-        game.board.setFanAngle();
+        game.resetBoard();
+        console.log(game.board.fanAngle);
 
-        game.board.dialAngle = 0;
-        game.board.setNewColors();
-
-        const preamble = `I'll be sending you a choice of a few spectrums to choose between, but first I'll show you where the target will be.`
-        const text = `Here are the spectrums you get to choose between:
-        \n:one: ${choices[0][0]} - ${choices[0][1]}\n:two: ${choices[1][0]} - ${choices[1][1]}\n:three: ${choices[2][0]} - ${choices[2][1]}
-        \nLook at where the target’s center is located spatially along the visible area of the wheel. Now think of a clue that is conceptually where the target is located ON THE SPECTRUM between the two concepts on your card.
-        \nThink of a clue that matches one of the possible spectrums above and once you've decided pick the spectrum by reacting with the corresponding emoji and give your clue to your team!`;
-
-
+        const promptEmbed = new MessageEmbed()
         message.channel.send(`I'm sending ${Util.getName(member!)} the instructions to start the next round.`)
+        try {
+            promptEmbed.addField(`Spectrum Choices`, `\n:one: ${choices[0][0]} - ${choices[0][1]}\n:two: ${choices[1][0]} - ${choices[1][1]}\n:three: ${choices[2][0]} - ${choices[2][1]}`);
+            const img = await game.board.bufferImage(false);
+            promptEmbed.setImage('attachment://board.png');
+            promptEmbed.addField('Your task', 'You now have to try to get your team to move the dial to where it is in the picture shown below. You\'ll need to try to think of a thing or a concept that you would place at that point between the two extremes on the spectrum of your choice.')
+            promptEmbed.addField('\u200b', 'Once you\'ve decided which spectrum you want to use for the round, react with the corresponding emoji and give your clue to your team!');
+            const msg = await author.send({ files: [img], embed: promptEmbed });
+            await addReactionsToMessage(["1️⃣", "2️⃣", "3️⃣"], msg);
+            const collected = await msg.awaitReactions(Util.reactionFilter(["1️⃣", "2️⃣", "3️⃣"]), { max: 1 });
 
-        const reactions: Array<Promise<MessageReaction>> = [];
-        author.send(preamble).then((msg) => {
-            game.board.bufferImage(false).then(img => author.send(img)).then(() => {
-                author.send(text).then((msg) => {
-                    reactions.push(msg.react("1️⃣"));
-                    reactions.push(msg.react("2️⃣"));
-                    reactions.push(msg.react("3️⃣"));
-                    Promise.all(reactions).then(() => {
-                        msg.awaitReactions(Util.reactionFilter(["1️⃣", "2️⃣", "3️⃣"]), { max: 1 })
-                            .then(collected => {
-                                let prompt = collected.has("1️⃣") ?
-                                    choices[0] : collected.has("2️⃣") ?
-                                        choices[1] : choices[2];
-                                game.board.setPrompt(prompt);
-                                game.board.sendAsMessage(true, channel);
-                            });
-                    }).catch(console.error);
-                }).catch(console.error);
-            }).catch(console.error);
-        }).catch(error => {
+            let prompt = collected.has("1️⃣") ?
+                choices[0] : collected.has("2️⃣") ?
+                    choices[1] : choices[2];
+            game.board.setPrompt(prompt);
+            game.board.dialAngle = 0;
+            game.board.sendAsMessage(true, channel);
+        }
+        catch {
             console.error(`Could not send start DM to ${message.author.tag}.\n`);
             message.reply('It seems like I can\'t DM you! Do you have DMs disabled? You can enable them for this server by changing your privacy settings in the top left.');
             game.started = false;
-        });
+        }
     }
 }
 
