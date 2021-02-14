@@ -4,6 +4,7 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
+        "noUnusedLocals": true,
         "outDir": "./dist",
         "target": "es2019",
         "moduleResolution": "node",
