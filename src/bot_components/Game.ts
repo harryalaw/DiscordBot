@@ -1,5 +1,5 @@
 import { GuildMember, Collection, MessageEmbed, Channel } from 'discord.js';
-import { Board } from './board';
+import { Board } from './Board';
 import { Util } from '../utility/util';
 import { prompts } from './../../assets/text_assets/prompts.json';
 
@@ -31,6 +31,7 @@ export class Game {
         this.clueGiver = null;
     }
 
+    ///////// Player and team methods
     removePlayer(member: GuildMember) {
         this.teams[this.players.get(member)!].delete(member.id);
         this.players.delete(member);
@@ -59,6 +60,16 @@ export class Game {
         this.teams[team ^ 1].delete(member.id);
     }
 
+    shuffleTeams() {
+        const playerArray: Array<GuildMember> = Array.from(this.players.keys());
+        this.teams[0].clear();
+        this.teams[1].clear();
+        Util.shuffleArray(playerArray);
+        playerArray.forEach((member) => {
+            this.setTeam(member);
+        })
+    }
+    ///////// Score methods
     setScoreCap(score: number) {
         this.scoreCap = score;
     }
@@ -73,15 +84,7 @@ export class Game {
         return scoreEmbed;
     }
 
-    shuffleTeams() {
-        const playerArray: Array<GuildMember> = Array.from(this.players.keys());
-        this.teams[0].clear();
-        this.teams[1].clear();
-        Util.shuffleArray(playerArray);
-        playerArray.forEach((member) => {
-            this.setTeam(member);
-        })
-    }
+    ///////// Prompt methods
 
     newPrompt() {
         this.prompt = Util.pickRandom(prompts);
@@ -91,5 +94,14 @@ export class Game {
     resetPrompt() {
         this.prompt = ["", ""];
         this.board.setPrompt(["", ""])
+    }
+
+
+    ///// Board reset
+
+    resetBoard() {
+        this.resetPrompt();
+        this.board.setFanAngle();
+        this.board.setNewColors();
     }
 }
